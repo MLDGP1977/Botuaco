@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Logística - Botuaço</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        
+        /* Estilos do Logo Integrado */
+        .header-logo-container { display: flex; align-items: center; gap: 12px; }
+        .header-logo-img { height: 48px; width: auto; }
+        .header-logo-text { font-family: 'Arial Black', sans-serif; font-size: 1.8rem; font-weight: 900; color: #1e3a8a; letter-spacing: -1px; line-height: 1; }
+
+        .status-badge { padding: 4px 12px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .status-pendente { background-color: #fef3c7; color: #92400e; }
+        .status-producao { background-color: #dbeafe; color: #1e40af; }
+        .status-pronto { background-color: #d1fae5; color: #065f46; }
+        .status-entregue { background-color: #e5e7eb; color: #374151; }
+        
+        tr.clickable { cursor: pointer; transition: background 0.2s; }
+        tr.clickable:hover { background-color: #f9fafb !important; }
+
+        #modalEdit { display: none; }
+        #modalEdit.active { display: flex; }
+
+        .filter-input {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 10px center;
+            background-size: 18px;
+            padding-left: 38px;
+        }
+
+        #loadingOverlay {
+            position: fixed; inset: 0; background: rgba(255,255,255,0.7);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 100; backdrop-filter: blur(2px);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div id="loadingOverlay">
+        <div class="flex flex-col items-center bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
+            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mb-2"></div>
+            <p class="text-sm font-bold text-gray-600">Sincronizando Dados...</p>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Cabeçalho com o Logo Funcional -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-6">
+            <div class="flex items-center gap-6">
+                <div class="header-logo-container">
+                    <img src="data:image/png;base64,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" alt="Logo Botuaço" class="header-logo-img">
+                    <div class="header-logo-text">BOTUAÇO</div>
+                </div>
+                <div class="h-10 w-[1px] bg-gray-300 hidden md:block"></div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight text-gray-700 hidden md:block">Logística e Expedição</h1>
+                    <p class="text-gray-400 text-[10px] font-mono uppercase tracking-widest">Ferragem para Construção Civil</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap gap-4 bg-white p-4 rounded-2xl shadow-sm border border-gray-100 items-end">
+                <div class="flex flex-col">
+                    <label class="text-[10px] font-bold text-gray-400 mb-1 uppercase tracking-wider text-center">Filtrar Semana</label>
+                    <div class="flex items-center bg-gray-50 border border-gray-200 rounded-lg p-2 gap-3">
+                        <input type="date" id="calendarioSemana" class="bg-transparent text-sm font-semibold text-gray-700 outline-none cursor-pointer">
+                        <div id="displaySemana" class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded border border-blue-100 whitespace-nowrap">Carregando...</div>
+                    </div>
+                </div>
+                <div class="flex flex-col border-l pl-4 border-gray-100">
+                    <label class="text-[10px] font-bold text-gray-400 mb-1 uppercase tracking-wider">Limite Diário</label>
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="inputLimite" value="3500" step="500" class="w-20 bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm font-bold text-red-600 outline-none">
+                        <span class="text-[10px] font-bold text-gray-400">KG</span>
+                    </div>
+                </div>
+                <button onclick="carregarDados()" class="bg-blue-600 hover:bg-blue-700 text-white p-2.5 rounded-lg shadow-md transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Formulário -->
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
+                    <h2 class="font-bold text-gray-700 mb-4 flex items-center gap-2 text-sm uppercase tracking-wide">
+                        Novo Romaneio
+                    </h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Data</label>
+                            <input type="date" id="formDia" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Obra / Cliente</label>
+                            <input type="text" id="formCliente" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Peso (kg)</label>
+                                <input type="number" id="formPeso" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none font-bold">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Status</label>
+                                <select id="formStatus" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none font-bold">
+                                    <option value="pendente">Aguardando</option>
+                                    <option value="producao">Produção</option>
+                                    <option value="pronto">Pronto</option>
+                                    <option value="entregue">Entregue</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="adicionarRegistro()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg">
+                            Lançar na Planilha
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h2 class="font-bold text-gray-700 mb-4 text-xs text-center uppercase tracking-widest">Produção</h2>
+                    <div style="height: 180px;"><canvas id="statusChart"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Listagem -->
+            <div class="lg:col-span-3 space-y-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-l-4 border-l-blue-500">
+                        <p class="text-[9px] font-bold text-gray-400 uppercase">Semana</p>
+                        <h3 class="text-lg font-bold text-gray-800" id="kpiSemana">0 kg</h3>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-l-4 border-l-amber-500">
+                        <p class="text-[9px] font-bold text-gray-400 uppercase">Pendente</p>
+                        <h3 class="text-lg font-bold text-gray-800" id="kpiAguardando">0 kg</h3>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-l-4 border-l-emerald-500">
+                        <p class="text-[9px] font-bold text-gray-400 uppercase">Pronto</p>
+                        <h3 class="text-lg font-bold text-gray-800" id="kpiPronto">0 kg</h3>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-l-4 border-l-gray-400">
+                        <p class="text-[9px] font-bold text-gray-400 uppercase">Entregue</p>
+                        <h3 class="text-lg font-bold text-gray-800" id="kpiEntregue">0 kg</h3>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div style="height: 220px;"><canvas id="dailyVolumeChart"></canvas></div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-4 bg-gray-50 flex gap-4">
+                        <input type="text" id="filtroTexto" oninput="atualizarTudo()" placeholder="Pesquisar..." class="flex-1 filter-input bg-white border border-gray-200 rounded-xl p-2 text-sm outline-none">
+                        <select id="filtroStatus" onchange="atualizarTudo()" class="bg-white border border-gray-200 rounded-xl p-2 text-sm outline-none font-semibold">
+                            <option value="todos">Todos Status</option>
+                            <option value="pendente">Aguardando</option>
+                            <option value="producao">Produção</option>
+                            <option value="pronto">Pronto</option>
+                            <option value="entregue">Entregue</option>
+                        </select>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50 text-gray-400 text-[10px] font-bold uppercase">
+                                <tr>
+                                    <th class="px-6 py-3">Dia</th>
+                                    <th class="px-6 py-3">Cliente</th>
+                                    <th class="px-6 py-3 text-right">Peso</th>
+                                    <th class="px-6 py-3 text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="corpoTabela" class="divide-y divide-gray-100 text-sm"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Edição -->
+    <div id="modalEdit" class="fixed inset-0 bg-black/60 items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <h3 class="font-bold text-gray-800">Modificar Romaneio</h3>
+                <button onclick="fecharModal()" class="text-gray-400 hover:text-gray-600">✕</button>
+            </div>
+            <div class="p-6 space-y-4">
+                <input type="hidden" id="editId">
+                <input type="text" id="editCliente" placeholder="Cliente" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-semibold">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="date" id="editData" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm">
+                    <input type="number" id="editPeso" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-bold text-blue-600">
+                </div>
+                <select id="editStatus" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-bold">
+                    <option value="pendente">Aguardando</option>
+                    <option value="producao">Produção</option>
+                    <option value="pronto">Pronto</option>
+                    <option value="entregue">Entregue</option>
+                </select>
+            </div>
+            <div class="p-6 flex gap-3">
+                <button onclick="salvarEdicao()" class="flex-1 bg-blue-600 text-white font-bold py-3 rounded-xl">Salvar</button>
+                <button onclick="excluirRegistro()" class="px-4 bg-red-50 text-red-600 font-bold py-3 rounded-xl">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxS3HLzR7TD05aBnXJcsgen7c8x5ep_jIBSwtcer3X5G-vENs1nDyM1ivRVS_6PCbp7XA/exec"; 
+        let limiteDiario = 3500;
+        let baseDeDados = [];
+        let dailyChart, statusChart;
+        let dataSelecionada = new Date();
+
+        function mostrarLoading(show) { document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none'; }
+
+        function converterParaData(valor) {
+            if (!valor) return null;
+            if (/^\d{4}-\d{2}-\d{2}/.test(valor)) {
+                const [y, m, d] = valor.split('T')[0].split('-');
+                return new Date(y, m - 1, d);
+            }
+            if (valor.includes('/')) {
+                const parts = valor.split(' ')[0].split('/');
+                return parts[0].length === 4 ? new Date(parts[0], parts[1]-1, parts[2]) : new Date(parts[2], parts[1]-1, parts[0]);
+            }
+            return new Date(valor);
+        }
+
+        async function carregarDados() {
+            mostrarLoading(true);
+            try {
+                const response = await fetch(`${WEB_APP_URL}?action=read&t=${Date.now()}`);
+                const data = await response.json();
+                baseDeDados = data.map(item => ({
+                    ...item,
+                    id: item.id || Date.now() + Math.random(),
+                    peso: parseFloat(String(item.peso).replace(',', '.')) || 0,
+                    dataJS: converterParaData(item.data)
+                }));
+                atualizarTudo();
+            } catch (e) {
+                console.error(e);
+            } finally {
+                mostrarLoading(false);
+            }
+        }
+
+        async function adicionarRegistro() {
+            const novo = {
+                action: 'create',
+                id: Date.now(),
+                data: document.getElementById('formDia').value,
+                cliente: document.getElementById('formCliente').value,
+                peso: parseFloat(document.getElementById('formPeso').value) || 0,
+                status: document.getElementById('formStatus').value
+            };
+            if (!novo.cliente || !novo.peso || !novo.data) return;
+            mostrarLoading(true);
+            try {
+                await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(novo) });
+                document.getElementById('formCliente').value = '';
+                document.getElementById('formPeso').value = '0';
+                setTimeout(carregarDados, 1500);
+            } catch (e) { mostrarLoading(false); }
+        }
+
+        function getIntervaloSemana(dataBase) {
+            const d = new Date(dataBase);
+            const diaDaSemana = d.getDay(); 
+            const inicio = new Date(d);
+            inicio.setDate(d.getDate() - diaDaSemana);
+            inicio.setHours(0,0,0,0);
+            const fim = new Date(inicio);
+            fim.setDate(inicio.getDate() + 6);
+            fim.setHours(23,59,59,999);
+            return { inicio, fim };
+        }
+
+        function atualizarTudo() {
+            const { inicio, fim } = getIntervaloSemana(dataSelecionada);
+            document.getElementById('displaySemana').innerText = `${inicio.toLocaleDateString('pt-BR')} a ${fim.toLocaleDateString('pt-BR')}`;
+            const busca = document.getElementById('filtroTexto').value.toLowerCase();
+            const statusFiltro = document.getElementById('filtroStatus').value;
+
+            const filtrados = baseDeDados.filter(item => {
+                if (!item.dataJS) return false;
+                const naSemana = item.dataJS >= inicio && item.dataJS <= fim;
+                const matchesBusca = (item.cliente || "").toLowerCase().includes(busca);
+                const matchesStatus = statusFiltro === 'todos' || item.status === statusFiltro;
+                return naSemana && matchesBusca && matchesStatus;
+            });
+
+            renderizarTabela(filtrados);
+            atualizarKPIs(filtrados);
+            atualizarGraficos(filtrados, inicio);
+        }
+
+        function renderizarTabela(dados) {
+            const corpo = document.getElementById('corpoTabela');
+            corpo.innerHTML = '';
+            dados.sort((a,b) => a.dataJS - b.dataJS).forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = `clickable ${item.peso > limiteDiario ? 'bg-red-50' : ''}`;
+                tr.onclick = () => abrirEdicao(item.id);
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-bold text-gray-400">${item.dataJS.toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit'})}</td>
+                    <td class="px-6 py-4 font-semibold text-gray-700">${item.cliente}</td>
+                    <td class="px-6 py-4 text-right font-bold text-blue-700">${item.peso.toLocaleString()} kg</td>
+                    <td class="px-6 py-4 text-center"><span class="status-badge status-${item.status}">${item.status}</span></td>
+                `;
+                corpo.appendChild(tr);
+            });
+        }
+
+        function atualizarKPIs(dados) {
+            document.getElementById('kpiSemana').innerText = `${Math.round(dados.reduce((a,b)=>a+b.peso,0)).toLocaleString()} kg`;
+            document.getElementById('kpiAguardando').innerText = `${Math.round(dados.filter(d=>['pendente','producao'].includes(d.status)).reduce((a,b)=>a+b.peso,0)).toLocaleString()} kg`;
+            document.getElementById('kpiPronto').innerText = `${Math.round(dados.filter(d=>d.status==='pronto').reduce((a,b)=>a+b.peso,0)).toLocaleString()} kg`;
+            document.getElementById('kpiEntregue').innerText = `${Math.round(dados.filter(d=>d.status==='entregue').reduce((a,b)=>a+b.peso,0)).toLocaleString()} kg`;
+        }
+
+        function atualizarGraficos(dados, inicio) {
+            const volumes = Array(7).fill(0);
+            dados.forEach(item => {
+                const diff = Math.floor((item.dataJS - inicio) / 86400000);
+                if (diff >= 0 && diff < 7) volumes[diff] += item.peso;
+            });
+            dailyChart.data.datasets[0].data = volumes;
+            dailyChart.data.datasets[0].backgroundColor = volumes.map(v => v > limiteDiario ? '#ef4444' : '#3b82f6');
+            dailyChart.data.datasets[1].data = Array(7).fill(limiteDiario);
+            dailyChart.update();
+
+            const s = { pendente: 0, producao: 0, pronto: 0, entregue: 0 };
+            dados.forEach(item => { if (s[item.status] !== undefined) s[item.status] += item.peso; });
+            statusChart.data.datasets[0].data = [s.pendente, s.producao, s.pronto, s.entregue];
+            statusChart.update();
+        }
+
+        function inicializarGraficos() {
+            dailyChart = new Chart(document.getElementById('dailyVolumeChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                    datasets: [
+                        { label: 'Volume', data: [], borderRadius: 8 }, 
+                        { label: 'Meta', data: [], type: 'line', borderColor: '#ef4444', borderDash: [5,5], pointRadius: 0 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+            statusChart = new Chart(document.getElementById('statusChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pendente', 'Produção', 'Pronto', 'Entregue'],
+                    datasets: [{ data: [], backgroundColor: ['#fcd34d', '#60a5fa', '#34d399', '#9ca3af'], borderWidth: 0 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { display: false } } }
+            });
+        }
+
+        function abrirEdicao(id) {
+            const item = baseDeDados.find(b => b.id == id);
+            if (!item) return;
+            document.getElementById('editId').value = item.id;
+            document.getElementById('editCliente').value = item.cliente;
+            document.getElementById('editData').value = item.data.split('T')[0];
+            document.getElementById('editPeso').value = item.peso;
+            document.getElementById('editStatus').value = item.status;
+            document.getElementById('modalEdit').classList.add('active');
+        }
+
+        function fecharModal() { document.getElementById('modalEdit').classList.remove('active'); }
+
+        async function salvarEdicao() {
+            const editado = {
+                action: 'update',
+                id: document.getElementById('editId').value,
+                cliente: document.getElementById('editCliente').value,
+                data: document.getElementById('editData').value,
+                peso: parseFloat(document.getElementById('editPeso').value) || 0,
+                status: document.getElementById('editStatus').value
+            };
+            mostrarLoading(true);
+            try {
+                await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(editado) });
+                fecharModal();
+                setTimeout(carregarDados, 1500);
+            } catch (e) { mostrarLoading(false); }
+        }
+
+        async function excluirRegistro() {
+            if (!confirm('Excluir?')) return;
+            mostrarLoading(true);
+            try {
+                await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({action: 'delete', id: document.getElementById('editId').value}) });
+                fecharModal();
+                setTimeout(carregarDados, 1500);
+            } catch (e) { mostrarLoading(false); }
+        }
+
+        window.onload = () => {
+            const hoje = new Date();
+            document.getElementById('calendarioSemana').value = hoje.toISOString().split('T')[0];
+            document.getElementById('formDia').value = hoje.toISOString().split('T')[0];
+            document.getElementById('inputLimite').oninput = (e) => { limiteDiario = parseInt(e.target.value) || 0; atualizarTudo(); };
+            document.getElementById('calendarioSemana').onchange = (e) => {
+                const parts = e.target.value.split('-');
+                dataSelecionada = new Date(parts[0], parts[1]-1, parts[2]);
+                atualizarTudo();
+            };
+            inicializarGraficos();
+            carregarDados();
+        };
+    </script>
+</body>
+</html>
