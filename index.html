@@ -1247,12 +1247,26 @@ function esconderLoading() {
     statusChart.update();
 }
 
-		setInterval(() => {
-    const modalAberto = document.getElementById('modalEdit').classList.contains('active');
+let carregandoAuto = false;
+
+setInterval(async () => {
+
+    if (carregandoAuto) return;
+
+    const modalAberto = document
+        .getElementById('modalEdit')
+        .classList.contains('active');
 
     if (!modalAberto) {
-        carregarDados();
+        carregandoAuto = true;
+
+        try {
+            await carregarDados();
+        } finally {
+            carregandoAuto = false;
+        }
     }
+
 }, 600000);
 
 
