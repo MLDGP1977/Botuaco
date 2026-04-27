@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,84 +8,139 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
 
-        /* Estilos do Logo Integrado */
-        .header-logo-container { display: flex; align-items: center; gap: 12px; }
-        .header-logo-img { height: 48px; width: auto; }
-        .header-logo-text { font-family: 'Arial Black', sans-serif; font-size: 1.8rem; font-weight: 900; color: #1e3a8a; letter-spacing: -1px; line-height: 1; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
 
-        .status-badge { padding: 4px 12px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
-        .status-pendente { background-color: #fef3c7; color: #92400e; }
-        .status-producao { background-color: #dbeafe; color: #1e40af; }
-        .status-pronto { background-color: #d1fae5; color: #065f46; }
-        .status-saida {  background-color: #fed7aa; color: #9a3412;}
-        .status-entregue { background-color: #e5e7eb; color: #374151; }
+        .header-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
+        .header-logo-img {
+            height: 48px;
+            width: auto;
+        }
 
-.fc {
-  font-size: 12px;
-  background: white;
-  border-radius: 16px;
-  padding: 10px;
-}
+        .header-logo-text {
+            font-family: 'Arial Black', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #1e3a8a;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
 
-.fc .fc-toolbar-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #374151;
-}
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
 
-.fc .fc-button {
-  background: #f3f4f6;
-  border: none;
-  color: #374151;
-  border-radius: 8px;
-  padding: 6px 10px;
-  font-size: 12px;
-  transition: 0.2s;
-}
+        .status-pendente {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
 
-.fc .fc-button:hover {
-  background: #e5e7eb;
-}
+        .status-producao {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
 
-.fc .fc-daygrid-day {
-  transition: 0.2s;
-  border-radius: 8px;
-width: 100%;
-}
+        .status-pronto {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
 
-.fc .fc-daygrid-day:hover {
-  background: #f9fafb;
-  cursor: pointer;
-}
+        .status-saida {
+            background-color: #fed7aa;
+            color: #9a3412;
+        }
 
-.fc .fc-day-today {
-  background: #eff6ff !important;
-  border: 1px solid #3b82f6;
-}
+        .status-entregue {
+            background-color: #e5e7eb;
+            color: #374151;
+        }
 
-.fc-event {
-  border-radius: 6px;
-  font-size: 11px;
-  padding: 2px 4px;
-  font-weight: 600;
-}
-.fc .fc-scrollgrid {
-  border: none !important;
-}
+        .fc {
+            font-size: 12px;
+            background: white;
+            border-radius: 16px;
+            padding: 10px;
+        }
 
+        .fc .fc-toolbar-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+        }
 
-        tr.clickable { cursor: pointer; transition: background 0.2s; }
-        tr.clickable:hover { background-color: #f9fafb !important; }
+        .fc .fc-button {
+            background: #f3f4f6;
+            border: none;
+            color: #374151;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 12px;
+            transition: 0.2s;
+        }
 
-        #modalEdit { display: none; }
-        #modalEdit.active { display: flex; }
+        .fc .fc-button:hover {
+            background: #e5e7eb;
+        }
+
+        .fc .fc-daygrid-day {
+            transition: 0.2s;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .fc .fc-daygrid-day:hover {
+            background: #f9fafb;
+            cursor: pointer;
+        }
+
+        .fc .fc-day-today {
+            background: #eff6ff !important;
+            border: 1px solid #3b82f6;
+        }
+
+        .fc-event {
+            border-radius: 6px;
+            font-size: 11px;
+            padding: 2px 4px;
+            font-weight: 600;
+        }
+
+        .fc .fc-scrollgrid {
+            border: none !important;
+        }
+
+        tr.clickable {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        tr.clickable:hover {
+            background-color: #f9fafb !important;
+        }
+
+        #modalEdit {
+            display: none;
+        }
+
+        #modalEdit.active {
+            display: flex;
+        }
 
         .filter-input {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'%3E%3C/path%3E%3C/svg%3E");
@@ -95,119 +151,133 @@ width: 100%;
         }
     </style>
 </head>
-<body class="p-4 md:p-8">
 
+<body class="p-4 md:p-8">
     <div class="max-w-7xl mx-auto">
         <!-- Cabeçalho Principal -->
         <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-6">
             <div class="flex items-center gap-6">
                 <div class="header-logo-container">
-                    <img id="logoSecreto" src="data:image/png;base64,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" alt="Logo Botuaço" class="header-logo-img">
+                    <img id="logoSecreto"
+                        src="data:image/png;base64,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"
+                        alt="Logo Botuaço" class="header-logo-img">
                     <div class="header-logo-text">BOTUAÇO</div>
                 </div>
                 <div class="h-10 w-[1px] bg-gray-300 hidden md:block"></div>
                 <div>
-                    <h1 class="text-lg font-bold tracking-tight text-gray-700 hidden md:block">Logística e Expedição</h1>
-                    <p class="text-gray-400 text-[14px] font-mono uppercase tracking-widest">Ferragem para Construção Civil</p>
+                    <h1 class="text-lg font-bold tracking-tight text-gray-700 hidden md:block">Logística e Expedição
+                    </h1>
+                    <p class="text-gray-400 text-[14px] font-mono uppercase tracking-widest">Ferragem para Construção
+                        Civil</p>
                 </div>
             </div>
-            
             <div class="flex flex-wrap gap-4 bg-white p-4 rounded-2xl shadow-sm border border-gray-100 items-end">
                 <div class="flex flex-col">
-                    <label class="text-[10px] font-bold text-gray-400 mb-1 uppercase tracking-wider text-center">Filtrar Semana</label>
+                    <label class="text-[10px] font-bold text-gray-400 mb-1 uppercase tracking-wider text-center">Filtrar
+                        Semana</label>
                     <div class="flex items-center bg-gray-50 border border-gray-200 rounded-lg p-2 gap-3">
                         <div class="relative">
-    <button id="btnCalendario" class="text-[11px] bg-blue-50 border border-blue-200 px-3 py-2 rounded text-blue-600">
-        📅 Selecionar Semana
-    </button>
-
-<div id="calendarioWrapper" 
-class="hidden absolute z-50 bg-white shadow-2xl rounded-2xl p-4 mt-2 border border-gray-100 w-[800px]">
-
-
-        <div id="calendario"></div>
-    </div>
-</div>
-                        <div id="displaySemana" class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded border border-blue-100 whitespace-nowrap">
+                            <button id="btnCalendario"
+                                class="text-[11px] bg-blue-50 border border-blue-200 px-3 py-2 rounded text-blue-600">
+                                📅 Selecionar Semana
+                            </button>
+                            <div id="calendarioWrapper"
+                                class="hidden absolute z-50 bg-white shadow-2xl rounded-2xl p-4 mt-2 border border-gray-100 w-[800px]">
+                                <div id="calendario"></div>
+                            </div>
+                        </div>
+                        <div id="displaySemana"
+                            class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded border border-blue-100 whitespace-nowrap">
                             Carregando...
                         </div>
                     </div>
                 </div>
                 <div class="flex flex-col border-l pl-4 border-gray-100">
-                    <label class="text-[10px] font-bold text-gray-400 mb-1 uppercase tracking-wider">Limite Diário (mts)</label>
+                    <label class="text-[10px] font-bold text-gray-400 mb-1 uppercase tracking-wider">Limite Diário
+                        (mts)</label>
                     <div class="flex items-center gap-2">
-                        <input type="number" id="inputLimite" value="3500" step="500" class="w-24 bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm font-bold text-red-600 outline-none" readonly>
+                        <input type="number" id="inputLimite" value="850" step="500"
+                            class="w-24 bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm font-bold text-red-600 outline-none"
+                            readonly>
                         <span class="text-xs font-bold text-gray-400">mts</span>
-    <button onclick="alterarSenha()" 
-        class="text-[10px] text-blue-500 hover:underline ml-2">
-        Alterar Senha
-    </button>
+                        <button onclick="alterarSenha()" class="text-[10px] text-blue-500 hover:underline ml-2">
+                            Alterar Senha
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            
-            <!-- Coluna de Inserção -->
-            <div class="lg:col-span-1 space-y-6">
-                <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-stretch">
+            <!-- Coluna de Inserção  Esquerda-->
+            <div class="flex flex-col gap-6 h-full">
+                <div class="bg-white w-full lg:max-w-md rounded-3xl shadow-xl border border-gray-100 p-5 md:p-6 min-h-[510px]">
                     <h2 class="font-bold text-gray-700 mb-4 flex items-center gap-2 text-sm uppercase tracking-wide">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                                clip-rule="evenodd" />
                         </svg>
                         Novo Romaneio
                     </h2>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="text-xs font-semibold text-gray-500 block mb-1">Dia da Entrega</label>
-                            <input type="date" id="formDia" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-100">
-                        </div>
-<div>
-    <label class="text-xs font-semibold text-gray-500 block mb-1">Nº Pedido</label>
-    <input type="text" id="formPedido" placeholder="Ex: 12345" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-100">
-</div>
-                        <div>
-                            <label class="text-xs font-semibold text-gray-500 block mb-1">Cliente / Obra</label>
-                            <input type="text" id="formCliente" placeholder="Nome do cliente" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-100">
-                        </div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label class="text-xs font-semibold text-gray-500 block mb-1">Metros (mts)</label>
-                                <input type="number" id="formMedida" placeholder="0" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none font-bold focus:ring-2 focus:ring-blue-100">
-                            </div>
-                            <div>
-                                <label class="text-xs font-semibold text-gray-500 block mb-1">Status</label>
-                                <select id="formStatus" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-100">
-                                    <option value="pendente">Aguardando</option>
-                                    <option value="producao">Em Produção</option>
-                                    <option value="pronto">Pronto</option>
-                                    <option value="saida">Saiu para Entrega</option>
-                                    <option value="entregue">Entregue</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="text-xs font-semibold text-gray-500 block mb-1">Produto / Descrição</label>
-                            <textarea id="formProduto" rows="2" placeholder="Ex: Vigas 10mm..." class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-100"></textarea>
-                        </div>
-                        <button onclick="adicionarRegistro()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl transition-all shadow-lg shadow-blue-200 active:scale-[0.98]">
-                            Lançar no Painel
-                        </button>
+
+                    <div>
+                        <label class="text-xs font-semibold text-gray-500 block mb-1">Dia da Entrega</label>
+                        <input type="date" id="formDia"
+                            class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-100">
                     </div>
+                    <div>
+                        <label class="text-xs font-semibold text-gray-500 block mb-1">Nº Pedido</label>
+                        <input type="text" id="formPedido" placeholder="Ex: 12345"
+                            class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-100">
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold text-gray-500 block mb-1">Cliente / Obra</label>
+                        <input type="text" id="formCliente" placeholder="Nome do cliente"
+                            class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-100">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 block mb-1">Metros (mts)</label>
+                            <input type="number" id="formMedida" placeholder="0"
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none font-bold focus:ring-2 focus:ring-blue-100">
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 block mb-1">Status</label>
+                            <select id="formStatus"
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-100">
+                                <option value="pendente">Aguardando</option>
+                                <option value="producao">Em Produção</option>
+                                <option value="pronto">Pronto</option>
+                                <option value="saida">Saiu para Entrega</option>
+                                <option value="entregue">Entregue</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold text-gray-500 block mb-1">Produto / Descrição</label>
+                        <textarea id="formProduto" rows="2" placeholder="Ex: Vigas 10mm..."
+                            class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-100"></textarea>
+                    </div>
+                    <button onclick="adicionarRegistro()"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl transition-all shadow-lg shadow-blue-200 active:scale-[0.98]">
+                        Lançar no Painel
+                    </button>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <!-- Composição da Produção -->
+                <div class="bg-white w-full lg:max-w-md rounded-3xl shadow-xl border border-gray-100 p-5 md:p-6 min-h-[390px]">
                     <h2 class="font-bold text-gray-700 mb-4 text-xs text-center uppercase">Composição da Produção</h2>
-                    <div style="height: 257px;">
+                    <div style="height:320px;">
                         <canvas id="statusChart"></canvas>
                     </div>
                 </div>
             </div>
 
-            <!-- Coluna de Visualização -->
+            <!-- Coluna de Visualização Direita -->
             <div class="lg:col-span-3 space-y-6">
-                
+
                 <!-- Cards de Resumo -->
                 <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                     <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-gray-400">
@@ -218,15 +288,18 @@ class="hidden absolute z-50 bg-white shadow-2xl rounded-2xl p-4 mt-2 border bord
                         <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Semana Selec.</p>
                         <h3 class="text-lg font-bold text-gray-800 mt-1" id="kpiSemana">0 mts</h3>
                     </div>
-                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-amber-500">
+                    <div
+                        class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-amber-500">
                         <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Pendente</p>
                         <h3 class="text-lg font-bold text-gray-800 mt-1" id="kpiAguardando">0 mts</h3>
                     </div>
-                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-emerald-500">
+                    <div
+                        class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-emerald-500">
                         <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Pronto</p>
                         <h3 class="text-lg font-bold text-gray-800 mt-1" id="kpiPronto">0 mts</h3>
                     </div>
-                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-indigo-500">
+                    <div
+                        class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-indigo-500">
                         <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Entregue</p>
                         <h3 class="text-lg font-bold text-gray-800 mt-1" id="kpiEntregue">0 mts</h3>
                     </div>
@@ -243,12 +316,16 @@ class="hidden absolute z-50 bg-white shadow-2xl rounded-2xl p-4 mt-2 border bord
                 <!-- Filtros e Tabela -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                     <!-- Barra de Filtros Rápidos -->
-                    <div class="p-4 bg-gray-50/50 border-b border-gray-100 flex flex-col md:flex-row gap-4 items-center">
+                    <div
+                        class="p-4 bg-gray-50/50 border-b border-gray-100 flex flex-col md:flex-row gap-4 items-center">
                         <div class="relative flex-1 w-full">
-                            <input type="text" id="filtroTexto" oninput="atualizarTudo()" placeholder="Pesquisar cliente ou produto..." class="w-full filter-input bg-white border border-gray-200 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-100 transition-all">
+                            <input type="text" id="filtroTexto" oninput="atualizarTudo()"
+                                placeholder="Pesquisar cliente ou produto..."
+                                class="w-full filter-input bg-white border border-gray-200 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-100 transition-all">
                         </div>
                         <div class="w-full md:w-48">
-                            <select id="filtroStatus" onchange="atualizarTudo()" class="w-full bg-white border border-gray-200 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-100 transition-all font-semibold text-gray-600">
+                            <select id="filtroStatus" onchange="atualizarTudo()"
+                                class="w-full bg-white border border-gray-200 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-100 transition-all font-semibold text-gray-600">
                                 <option value="todos">Todos os Status</option>
                                 <option value="pendente">Aguardando</option>
                                 <option value="producao">Em Produção</option>
@@ -282,38 +359,53 @@ class="hidden absolute z-50 bg-white shadow-2xl rounded-2xl p-4 mt-2 border bord
     </div>
 
     <!-- Modal de Edição -->
-    <div id="modalEdit" class="fixed inset-0 bg-black/60 items-center justify-center p-4 z-50 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+    <div id="modalEdit" class="fixed inset-0 hidden bg-black/60 z-50
+        overflow-y-auto
+        p-2 md:p-4
+        flex justify-center items-start">
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl 
+             my-4 md:my-8
+             flex flex-col
+             animate-in fade-in zoom-in duration-200">
             <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
                 <h3 class="font-bold text-gray-800">Detalhes do Romaneio</h3>
-                <button onclick="fecharModal()" class="text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-200 transition-all text-lg">✕</button>
+                <button onclick="fecharModal()"
+                    class="text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-200 transition-all text-lg">✕</button>
             </div>
-<div class="p-6 space-y-4">
-    <input type="hidden" id="editId">
+            <div class="p-4 md:p-6 space-y-4 overflow-y-auto flex-1">
+                <input type="hidden" id="editId">
 
-    <!-- 🔽 AQUI -->
-    <div>
-        <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Pedido</label>
-        <div id="editPedido" class="bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-mono text-blue-600 font-bold"></div>
-    </div>
+                <!-- 🔽 AQUI -->
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Pedido</label>
+                    <div id="editPedido"
+                        class="bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-mono text-blue-600 font-bold">
+                    </div>
+                </div>
 
-    <div>
-        <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Cliente / Obra</label>
-        <input type="text" id="editCliente" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-semibold">
-    </div>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Cliente / Obra</label>
+                    <input type="text" id="editCliente"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-semibold">
+                </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Data de Entrega</label>
-                        <input type="date" id="editData" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Data de
+                            Entrega</label>
+                        <input type="date" id="editData"
+                            class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm">
                     </div>
                     <div>
-                        <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Metragem Total (mts)</label>
-                        <input type="number" id="editMedida" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-bold text-blue-600">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Metragem Total
+                            (mts)</label>
+                        <input type="number" id="editMedida"
+                            class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-bold text-blue-600">
                     </div>
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Status Atual</label>
-                    <select id="editStatus" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-bold">
+                    <select id="editStatus"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-bold">
                         <option value="pendente">Aguardando</option>
                         <option value="producao">Em Produção</option>
                         <option value="pronto">Pronto</option>
@@ -322,15 +414,22 @@ class="hidden absolute z-50 bg-white shadow-2xl rounded-2xl p-4 mt-2 border bord
                     </select>
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Descrição dos Materiais</label>
-                    <textarea id="editProduto" rows="3" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm"></textarea>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Descrição dos
+                        Materiais</label>
+                    <textarea id="editProduto" rows="3"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm"></textarea>
                 </div>
             </div>
-            <div class="p-6 flex gap-3 border-t border-gray-50">
-                <button onclick="salvarEdicao()" class="flex-1 bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-100 transition-all active:scale-[0.98]">
+            <div class="p-4 md:p-6 flex flex-col sm:flex-row gap-3 border-t border-gray-50 bg-white">
+                <button onclick="salvarEdicao()" class="flex-1 bg-blue-600 text-white font-bold py-3 rounded-xl">
                     Salvar Alterações
                 </button>
-                <button onclick="excluirRegistro()" class="px-4 bg-red-50 text-red-600 font-bold py-3 rounded-xl hover:bg-red-100 transition-all">
+                <button onclick="fecharModal()"
+                    class="px-4 bg-gray-100 text-gray-700 font-bold py-3 rounded-xl hover:bg-gray-200">
+                    Cancelar
+                </button>
+                <button onclick="excluirRegistro()"
+                    class="px-4 bg-red-50 text-red-600 font-bold py-3 rounded-xl hover:bg-red-100">
                     Excluir
                 </button>
             </div>
@@ -338,59 +437,50 @@ class="hidden absolute z-50 bg-white shadow-2xl rounded-2xl p-4 mt-2 border bord
     </div>
 
     <script>
-let senhaLimite = localStorage.getItem("senhaLimite");
 
-if (!senhaLimite) {
-    senhaLimite = prompt("Crie uma senha inicial:");
-    localStorage.setItem("senhaLimite", senhaLimite);
-}
-let autorizadoLimite = false;
-let limiteDiario = 3500;
-let limiteToleravel = 4200;
-const pluginRotulosLinha = {
-    id: 'rotulosLinha',
-    afterDatasetsDraw(chart) {
-        const { ctx } = chart;
-        chart.data.datasets.forEach((dataset, i) => {
-            if (dataset.type !== 'line') return;
-            const meta = chart.getDatasetMeta(i);
-            const lastPoint = meta.data[meta.data.length - 1];
-            if (!lastPoint) return;
-            const valor = dataset.data[dataset.data.length - 1];
-            ctx.save();
-            ctx.fillStyle = dataset.borderColor;
-            ctx.font = 'bold 10px Inter';
-            ctx.textAlign = 'left';
-            ctx.textBaseline = 'middle';
- ctx.fillText(
-    `${valor}`,
-    lastPoint.x + 6,
-    lastPoint.y
-);
-            ctx.restore();
+        let senhaLimite = "";
+        let autorizadoLimite = false;
+        let limiteDiario = 0;
+        let limiteToleravel = 0;
+        const pluginRotulosLinha = {
+            id: 'rotulosLinha',
+            afterDatasetsDraw(chart) {
+                const { ctx } = chart;
+                chart.data.datasets.forEach((dataset, i) => {
+                    if (dataset.type !== 'line') return;
+                    const meta = chart.getDatasetMeta(i);
+                    const lastPoint = meta.data[meta.data.length - 1];
+                    if (!lastPoint) return;
+                    const valor = dataset.data[dataset.data.length - 1];
+                    ctx.save();
+                    ctx.fillStyle = dataset.borderColor;
+                    ctx.font = 'bold 10px Inter';
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(
+                        `${valor}`,
+                        lastPoint.x + 6,
+                        lastPoint.y
+                    );
+                    ctx.restore();
+                });
+            }
+        };
+
+        let contadorCliques = 0;
+        document.getElementById("logoSecreto").addEventListener("click", () => {
+            contadorCliques++;
+            if (contadorCliques === 5) {
+                contadorCliques = 0;
+                resetarSenha();
+            }
+            setTimeout(() => {
+                contadorCliques = 0;
+            }, 2000); // reseta se demorar muito
         });
-    }
-};
 
-let contadorCliques = 0;
-
-document.getElementById("logoSecreto").addEventListener("click", () => {
-    contadorCliques++;
-
-    if (contadorCliques === 5) {
-        contadorCliques = 0;
-        resetarSenha();
-    }
-
-    setTimeout(() => {
-        contadorCliques = 0;
-    }, 2000); // reseta se demorar muito
-});
-
-let baseDeDados = [];
-const API_URL = "https://script.google.com/macros/s/AKfycbxS3HLzR7TD05aBnXJcsgen7c8x5ep_jIBSwtcer3X5G-vENs1nDyM1ivRVS_6PCbp7XA/exec";
-
-
+        let baseDeDados = [];
+        const API_URL = "https://script.google.com/macros/s/AKfycbxS3HLzR7TD05aBnXJcsgen7c8x5ep_jIBSwtcer3X5G-vENs1nDyM1ivRVS_6PCbp7XA/exec";
         let dailyChart, statusChart;
         let dataSelecionada = new Date();
 
@@ -406,7 +496,8 @@ const API_URL = "https://script.google.com/macros/s/AKfycbxS3HLzR7TD05aBnXJcsgen
             return `${year}-${month}-${day}`;
         }
 
-        window.onload = async() => {
+        window.onload = async () => {
+            document.getElementById('inputLimite').value = limiteDiario;
             document.getElementById('formDia').value = formatToISODate(dataSelecionada);
 
             inicializarGraficos();
@@ -418,10 +509,10 @@ const API_URL = "https://script.google.com/macros/s/AKfycbxS3HLzR7TD05aBnXJcsgen
                 atualizarTudo();
             });
 
-            document.addEventListener("keydown", function(e) {
-            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "s") {
-            resetarSenha();
-            }
+            document.addEventListener("keydown", function (e) {
+                if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "s") {
+                    resetarSenha();
+                }
             });
 
             document.getElementById('inputLimite').addEventListener('input', (e) => {
@@ -432,158 +523,155 @@ const API_URL = "https://script.google.com/macros/s/AKfycbxS3HLzR7TD05aBnXJcsgen
 
             const inputLimite = document.getElementById('inputLimite');
 
-            inputLimite.addEventListener('click', () => {
-            const senha = prompt("Digite a senha para alterar o limite:");
+            inputLimite.addEventListener('click', async () => {
+                const senha = prompt("Digite a senha para alterar o limite:");
+                if (senha !== senhaLimite) {
+                    alert("Senha incorreta!");
+                    return;
+                }
+                const novoValor = prompt("Digite o novo limite diário:");
+                if (novoValor === null) return;
+                const percentual = prompt("Digite a tolerância:");
+                if (percentual === null) return;
+                const valorNumero = parseInt(novoValor);
+                const percentualNumero = parseFloat(percentual);
+                limiteDiario = valorNumero;
+                limiteToleravel =
+                    valorNumero + (valorNumero * percentualNumero / 100);
+                mostrarLoading();
+                await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "text/plain"
+                    },
+                    body: JSON.stringify({
+                        acao: "alterarLimite",
+                        limite: valorNumero,
+                        tolerancia: percentualNumero
+                    })
+                });
+                esconderLoading();
+                inputLimite.value = valorNumero;
+                atualizarTudo();
+            });
 
-            if (senha !== senhaLimite) {
-            alert("Senha incorreta!");
-            return;
-            }
-
-    const novoValor = prompt("Digite o novo limite diário (mts):");
-    if (novoValor === null) return;
-
-    const percentual = prompt("Digite a % de tolerância (ex: 20 para 20%):");
-    if (percentual === null) return;
-
-    const valorNumero = parseInt(novoValor);
-    const percentualNumero = parseFloat(percentual);
-
-    if (isNaN(valorNumero) || valorNumero <= 0) {
-        alert("Limite inválido!");
-        return;
-    }
-
-    if (isNaN(percentualNumero) || percentualNumero < 0) {
-        alert("Percentual inválido!");
-        return;
-    }
-
-    limiteDiario = valorNumero;
-    limiteToleravel = valorNumero + (valorNumero * (percentualNumero / 100));
-
-    inputLimite.value = valorNumero;
-
-    atualizarTudo();
-});
-
-inputLimite.addEventListener('blur', () => {
-    inputLimite.setAttribute("readonly", true);
-    autorizadoLimite = false; 
-});
+            inputLimite.addEventListener('blur', () => {
+                inputLimite.setAttribute("readonly", true);
+                autorizadoLimite = false;
+            });
 
 
 
         };
 
 
-let calendar;
+        let calendar;
 
-function inicializarCalendario() {
-    const el = document.getElementById('calendario');
-document.getElementById('btnCalendario').addEventListener('click', () => {
-    const wrapper = document.getElementById('calendarioWrapper');
-    wrapper.classList.toggle('hidden');
-   setTimeout(() => {
-        calendar.updateSize();
-    }, 50);
-});
-document.addEventListener('click', function (e) {
-    const wrapper = document.getElementById('calendarioWrapper');
-    const btn = document.getElementById('btnCalendario');
+        function inicializarCalendario() {
+            const el = document.getElementById('calendario');
+            document.getElementById('btnCalendario').addEventListener('click', () => {
+                const wrapper = document.getElementById('calendarioWrapper');
+                wrapper.classList.toggle('hidden');
+                setTimeout(() => {
+                    calendar.updateSize();
+                }, 50);
+            });
+            document.addEventListener('click', function (e) {
+                const wrapper = document.getElementById('calendarioWrapper');
+                const btn = document.getElementById('btnCalendario');
 
-    if (!wrapper.contains(e.target) && !btn.contains(e.target)) {
-        wrapper.classList.add('hidden');
-    }
-});
+                if (!wrapper.contains(e.target) && !btn.contains(e.target)) {
+                    wrapper.classList.add('hidden');
+                }
+            });
 
-    calendar = new FullCalendar.Calendar(el, {
-        initialView: 'dayGridMonth',
-contentHeight: 280,
+            calendar = new FullCalendar.Calendar(el, {
+                initialView: 'dayGridMonth',
+                contentHeight: 280,
 
-        locale: 'pt-br',
+                locale: 'pt-br',
 
-        dateClick: function(info) {
-            dataSelecionada = new Date(info.dateStr);
-document.getElementById('formDia').value = info.dateStr;
-            atualizarTudo();
-        },
+                dateClick: function (info) {
+                    dataSelecionada = new Date(info.dateStr);
+                    document.getElementById('formDia').value = info.dateStr;
+                    atualizarTudo();
+                },
 
-eventContent: function(info) {
-    return {
-        html: `
+                eventContent: function (info) {
+                    return {
+                        html: `
             <div style="font-size:10px; line-height:1.2; color:#fff;">
                 <strong>${info.event.title}</strong><br/>
                 ${info.event.extendedProps.count || 0} pedidos
             </div>
         `
-    };
-},
+                    };
+                },
 
 
 
-        events: gerarEventosCalendario()
-    });
+                events: gerarEventosCalendario()
+            });
 
 
-    calendar.render();
-}
-
-
-
-
-function gerarEventosCalendario() {
-    const mapa = {};
-
-    baseDeDados.forEach(item => {
-        if (!mapa[item.data]) {
-            mapa[item.data] = {
-                total: 0,
-                entregue: 0,
-                titulo: []
-            };
+            calendar.render();
         }
 
-        mapa[item.data].total += item.medida;
 
-        if (item.status === 'entregue') {
-            mapa[item.data].entregue += item.medida;
+
+
+        function gerarEventosCalendario() {
+            const mapa = {};
+
+            baseDeDados.forEach(item => {
+                if (!mapa[item.data]) {
+                    mapa[item.data] = {
+                        total: 0,
+                        entregue: 0,
+                        titulo: []
+                    };
+                }
+
+                mapa[item.data].total += item.medida;
+
+                if (item.status === 'entregue') {
+                    mapa[item.data].entregue += item.medida;
+                }
+
+                mapa[item.data].titulo.push(item.cliente);
+            });
+
+            const eventos = [];
+
+            Object.keys(mapa).forEach(data => {
+                const d = mapa[data];
+
+                let cor = '#3b82f6'; // azul padrão
+
+                if (d.entregue === d.total) {
+                    cor = '#22c55e'; // verde = tudo entregue
+                } else if (d.entregue === 0) {
+                    cor = '#ef4444'; // vermelho = nada entregue
+                } else {
+                    cor = '#f59e0b'; // amarelo = parcial
+                }
+
+                eventos.push({
+                    title: `${d.total.toLocaleString()} mts`,
+                    start: data,
+                    backgroundColor: cor,
+                    borderColor: cor,
+                    textColor: '#fff',
+                    extendedProps: {
+                        ...d,
+                        count: d.titulo.length
+                    }
+                });
+
+            });
+
+            return eventos;
         }
-
-        mapa[item.data].titulo.push(item.cliente);
-    });
-
-    const eventos = [];
-
-    Object.keys(mapa).forEach(data => {
-        const d = mapa[data];
-
-        let cor = '#3b82f6'; // azul padrão
-
-        if (d.entregue === d.total) {
-            cor = '#22c55e'; // verde = tudo entregue
-        } else if (d.entregue === 0) {
-            cor = '#ef4444'; // vermelho = nada entregue
-        } else {
-            cor = '#f59e0b'; // amarelo = parcial
-        }
-
-eventos.push({
-    title: `${d.total.toLocaleString()} mts`,
-    start: data,
-    backgroundColor: cor,
-    borderColor: cor,
-    textColor: '#fff',
-    extendedProps: {
-        ...d,
-        count: d.titulo.length
-    }
-});
-
-    });
-
-    return eventos;
-}
 
 
 
@@ -591,7 +679,7 @@ eventos.push({
 
         function getIntervaloSemana(data) {
             const d = new Date(data);
-            const diaDaSemana = d.getDay(); 
+            const diaDaSemana = d.getDay();
             const inicio = new Date(d);
             inicio.setDate(d.getDate() - diaDaSemana);
             inicio.setHours(0, 0, 0, 0);
@@ -603,8 +691,8 @@ eventos.push({
 
         function atualizarTudo() {
             const { inicio, fim } = getIntervaloSemana(dataSelecionada);
-            document.getElementById('displaySemana').innerText = 
-                `${inicio.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'})} a ${fim.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'})}`;
+            document.getElementById('displaySemana').innerText =
+                `${inicio.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} a ${fim.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}`;
 
             const busca = document.getElementById('filtroTexto').value.toLowerCase();
             const statusFiltro = document.getElementById('filtroStatus').value;
@@ -614,15 +702,15 @@ eventos.push({
                 const dataItem = parseISOToLocalDate(item.data);
                 const dentroDaSemana = dataItem >= inicio && dataItem <= fim;
 
-                const matchesBusca = item.cliente.toLowerCase().includes(busca) || item.produto.toLowerCase().includes(busca) ||  (item.pedido && item.pedido.toLowerCase().includes(busca));
+                const matchesBusca = item.cliente.toLowerCase().includes(busca) || item.produto.toLowerCase().includes(busca) || (item.pedido && item.pedido.toLowerCase().includes(busca));
                 const matchesStatus = statusFiltro === 'todos' || item.status === statusFiltro;
                 return dentroDaSemana && matchesBusca && matchesStatus;
             });
 
-if (calendar) {
-    calendar.removeAllEvents();
-    calendar.addEventSource(gerarEventosCalendario());
-}
+            if (calendar) {
+                calendar.removeAllEvents();
+                calendar.addEventSource(gerarEventosCalendario());
+            }
 
             renderizarTabela(dadosFiltrados);
             atualizarGraficos(dadosFiltrados);
@@ -632,7 +720,7 @@ if (calendar) {
         function renderizarTabela(dados) {
             const corpo = document.getElementById('corpoTabela');
             corpo.innerHTML = '';
-            
+
             if (dados.length === 0) {
                 corpo.innerHTML = '<tr><td colspan="6" class="px-6 py-12 text-center text-gray-400 italic">Nenhum romaneio encontrado para os filtros aplicados.</td></tr>';
                 return;
@@ -644,7 +732,7 @@ if (calendar) {
                 const tr = document.createElement('tr');
                 tr.className = `clickable ${item.medida > limiteDiario ? 'bg-red-50/30' : ''}`;
                 tr.onclick = () => abrirEdicao(item.id);
-                
+
                 tr.innerHTML = `
                     <td class="px-6 py-4 font-bold text-gray-500 text-xs">${formatarData(item.data)}</td>
 		    <td class="px-6 py-4 font-mono text-xs text-gray-600">${item.pedido || '-'}</td>
@@ -671,201 +759,194 @@ if (calendar) {
             document.getElementById('editProduto').value = item.produto;
             document.getElementById('editPedido').innerText = item.pedido;
             document.getElementById('modalEdit').classList.add('active');
+            document.body.style.overflow = "hidden";
         }
 
         function fecharModal() {
             document.getElementById('modalEdit').classList.remove('active');
+            document.body.style.overflow = "auto";
         }
 
-async function salvarEdicao() {
-    try {
-        mostrarLoading();
+        async function salvarEdicao() {
+            try {
+                mostrarLoading();
 
-        const id = parseInt(document.getElementById('editId').value);
-        const item = baseDeDados.find(b => b.id === id);
+                const id = parseInt(document.getElementById('editId').value);
+                const item = baseDeDados.find(b => b.id === id);
 
-        if (!item) {
-            alert("Item não encontrado");
-            return;
-        }
+                if (!item) {
+                    alert("Item não encontrado");
+                    return;
+                }
 
-        const novoCliente = document.getElementById('editCliente').value;
-        const novoData = document.getElementById('editData').value;
-        const novoMedida = parseInt(document.getElementById('editMedida').value);
-        const novoStatus = document.getElementById('editStatus').value;
-        const novoProduto = document.getElementById('editProduto').value;
+                const novoCliente = document.getElementById('editCliente').value;
+                const novoData = document.getElementById('editData').value;
+                const novoMedida = parseInt(document.getElementById('editMedida').value);
+                const novoStatus = document.getElementById('editStatus').value;
+                const novoProduto = document.getElementById('editProduto').value;
 
-        // 🔹 TOTAL DO DIA (sem o item atual)
-        const totalDoDia = baseDeDados
-            .filter(b => b.data === novoData && b.id !== item.id)
-            .reduce((acc, b) => acc + b.medida, 0);
+                // 🔹 TOTAL DO DIA (sem o item atual)
+                const totalDoDia = baseDeDados
+                    .filter(b => b.data === novoData && b.id !== item.id)
+                    .reduce((acc, b) => acc + b.medida, 0);
 
-        const novoTotal = totalDoDia + novoMedida;
+                const novoTotal = totalDoDia + novoMedida;
 
-        // 🔴 BLOQUEIO TOTAL
-        if (novoTotal > limiteToleravel) {
-            alert(`❌ Limite tolerável do dia (${limiteToleravel} mts) excedido.\nTotal ficaria: ${novoTotal} mts`);
-            return;
-        }
+                // 🔴 BLOQUEIO TOTAL
+                if (novoTotal > limiteToleravel) {
+                    alert(`❌ Limite tolerável do dia (${limiteToleravel} mts) excedido.\nTotal ficaria: ${novoTotal} mts`);
+                    return;
+                }
 
-        // 🟡 LIBERA COM SENHA
-        if (novoTotal > limiteDiario) {
-            const senha = prompt(
-                `⚠️ Limite diário (${limiteDiario} mts) será ultrapassado.\nTotal do dia: ${novoTotal} mts\nDigite a senha:`
-            );
+                // 🟡 LIBERA COM SENHA
+                if (novoTotal > limiteDiario) {
+                    const senha = prompt(
+                        `⚠️ Limite diário (${limiteDiario} mts) será ultrapassado.\nTotal do dia: ${novoTotal} mts\nDigite a senha:`
+                    );
 
-            if (senha !== senhaLimite) {
-                alert("Senha incorreta! Alteração bloqueada.");
-                return;
+                    if (senha !== senhaLimite) {
+                        alert("Senha incorreta! Alteração bloqueada.");
+                        return;
+                    }
+                }
+
+                // 🚀 ENVIA PARA API
+                await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "text/plain"
+                    },
+                    body: JSON.stringify({
+                        acao: "editar",
+                        pedido: item.pedido,
+                        data: novoData,
+                        cliente: novoCliente,
+                        produto: novoProduto,
+                        medida: novoMedida,
+                        status: novoStatus
+                    })
+                });
+
+                await carregarDados();
+                fecharModal();
+
+            } catch (erro) {
+                console.error("Erro real:", erro);
+                alert("Erro ao salvar!");
+            } finally {
+                esconderLoading();
             }
         }
 
-        // 🚀 ENVIA PARA API
-        await fetch(API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "text/plain"
-            },
-            body: JSON.stringify({
-                acao: "editar",
-                pedido: item.pedido,
-                data: novoData,
-                cliente: novoCliente,
-                produto: novoProduto,
-                medida: novoMedida,
-                status: novoStatus
-            })
-        });
-
-        await carregarDados();
-        fecharModal();
-
-    } catch (erro) {
-        console.error("Erro real:", erro);
-        alert("Erro ao salvar!");
-    } finally {
-        esconderLoading();
-    }
-}
 
 
 
 
-
-async function excluirRegistro() {
-    const id = parseInt(document.getElementById('editId').value);
-    const item = baseDeDados.find(b => b.id === id);
-
-    if (!item) return;
-
-    if (!confirm('Deseja excluir este romaneio permanentemente?')) {
-        return;
-    }
-
-    try {
-        mostrarLoading(); // 🔥 loading igual aos outros
-
-        await fetch(API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "text/plain" // 🔥 CORRETO
-            },
-            body: JSON.stringify({
-                acao: "excluir",
-                pedido: item.pedido
-            })
-        });
-
-        await carregarDados();
-        fecharModal();
-
-    } catch (erro) {
-        console.error("Erro ao excluir:", erro);
-        alert("Erro ao excluir no Google Planilhas.");
-    } finally {
-        esconderLoading(); // 🔥 sempre esconde
-    }
-}
-
-
-async function adicionarRegistro() {
-    const cliente = document.getElementById('formCliente').value;
-    const pedido = document.getElementById('formPedido').value.trim();
-    const medida = parseInt(document.getElementById('formMedida').value);
-    const data = document.getElementById('formDia').value;
-    const status = document.getElementById('formStatus').value;
-    const produto = document.getElementById('formProduto').value;
-    const totalDoDia = baseDeDados
-    .filter(item => item.data === data)
-    .reduce((acc, item) => acc + item.medida, 0);
-    const novoTotal = totalDoDia + medida;
-
-    // 🔹 Validação básica
-    if (!cliente || !medida || !data) {
-        alert('Preencha Cliente, Medida e Data.');
-        return;
-    }
-
-    // 🔹 Evita pedido duplicado (usando base carregada)
-   const existente = baseDeDados.find(item => 
-    String(item.pedido).trim() === String(pedido).trim()
-);
-    if (existente) {
-        abrirEdicao(existente.id);
-        return;
-    }
-
-    // 🔴 BLOQUEIO TOTAL
-    if (novoTotal > limiteToleravel) {
-        alert(`❌ Limite máximo tolerável de ${limiteToleravel} mts excedido.\nLançamento NÃO permitido.`);
-        return;
-    }
-
-    // 🟡 LIBERA COM SENHA
-    if (novoTotal > limiteDiario) {
-        const senha = prompt(`⚠️ Acima do limite diário (${limiteDiario} mts).\nDigite a senha para liberar:`);
-
-        if (senha !== senhaLimite) {
-            alert("Senha incorreta! Lançamento bloqueado.");
-            return;
+        async function excluirRegistro() {
+            const id = parseInt(
+                document.getElementById('editId').value
+            );
+            const item = baseDeDados.find(
+                b => b.id === id
+            );
+            if (!item) return;
+            const senha = prompt(
+                "Digite a senha para excluir o romaneio:"
+            );
+            if ((senha || "").trim() !== (senhaLimite || "").trim()) {
+                alert("Senha incorreta. Exclusão cancelada.");
+                return;
+            }
+            if (!confirm(
+                `Confirma excluir pedido ${item.pedido}?`
+            )) {
+                return;
+            }
+            try {
+                mostrarLoading();
+                await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "text/plain"
+                    },
+                    body: JSON.stringify({
+                        acao: "excluir",
+                        pedido: item.pedido
+                    })
+                });
+                await carregarDados();
+                fecharModal();
+            } catch (erro) {
+                console.error(erro);
+                alert("Erro ao excluir.");
+            } finally {
+                esconderLoading();
+            }
         }
-    }
 
-    try {
-        // 🚀 ENVIA PARA GOOGLE SHEETS
-        mostrarLoading();
-await fetch(API_URL, {
-    method: "POST",
-headers: {
-    "Content-Type": "text/plain"
-},
-            body: JSON.stringify({
-                acao: "inserir",
-                data: data,
-                pedido: pedido,
-                cliente: cliente,
-                produto: produto,
-                medida: medida,
-                status: status
-            })
-        });
+        async function adicionarRegistro() {
+            const cliente = document.getElementById('formCliente').value;
+            const pedido = document.getElementById('formPedido').value.trim();
+            const medida = parseInt(document.getElementById('formMedida').value);
+            const data = document.getElementById('formDia').value;
+            const status = document.getElementById('formStatus').value;
+            const produto = document.getElementById('formProduto').value;
+            const totalDoDia = baseDeDados
+                .filter(item => item.data === data)
+                .reduce((acc, item) => acc + item.medida, 0);
+            const novoTotal = totalDoDia + medida;
+            if (!cliente || !medida || !data) {
+                alert('Preencha Cliente, Medida e Data.');
+                return;
+            }
+            const existente = baseDeDados.find(item =>
+                String(item.pedido).trim() === String(pedido).trim()
+            );
+            if (existente) {
+                abrirEdicao(existente.id);
+                return;
+            }
 
-        // 🔄 Recarrega dados do Sheets
-        await carregarDados();
-        esconderLoading();
-
-        // 🧹 Limpa formulário
-        document.getElementById('formCliente').value = '';
-        document.getElementById('formMedida').value = '';
-        document.getElementById('formProduto').value = '';
-        document.getElementById('formPedido').value = '';
-
-    } catch (erro) {
-        console.error("Erro ao inserir:", erro);
-        alert("Erro ao salvar no Google Planilhas.");
-    }
-}
-
+            // 🔴 BLOQUEIO TOTAL
+            if (novoTotal > limiteToleravel) {
+                alert(`❌ Limite máximo tolerável de ${limiteToleravel} mts excedido.\nLançamento NÃO permitido.`);
+                return;
+            }
+            if (novoTotal > limiteDiario) {
+                const senha = prompt(`⚠️ Acima do limite diário (${limiteDiario} mts).\nDigite a senha para liberar:`);
+                if (senha !== senhaLimite) {
+                    alert("Senha incorreta! Lançamento bloqueado.");
+                    return;
+                }
+            }
+            try {
+                mostrarLoading();
+                await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "text/plain"
+                    },
+                    body: JSON.stringify({
+                        acao: "inserir",
+                        data: data,
+                        pedido: pedido,
+                        cliente: cliente,
+                        produto: produto,
+                        medida: medida,
+                        status: status
+                    })
+                });
+                await carregarDados();
+                esconderLoading();
+                document.getElementById('formCliente').value = '';
+                document.getElementById('formMedida').value = '';
+                document.getElementById('formProduto').value = '';
+                document.getElementById('formPedido').value = '';
+            } catch (erro) {
+                console.error("Erro ao inserir:", erro);
+                alert("Erro ao salvar no Google Planilhas.");
+            }
+        }
 
         function formatarData(dataStr) {
             const d = parseISOToLocalDate(dataStr);
@@ -874,13 +955,12 @@ headers: {
 
         function atualizarKPIs(dadosSemana) {
             const totalGeral = baseDeDados
-    .filter(item => item.status !== 'entregue')
-    .reduce((acc, curr) => acc + curr.medida, 0);
+                .filter(item => item.status !== 'entregue')
+                .reduce((acc, curr) => acc + curr.medida, 0);
             const totalSemana = dadosSemana.reduce((acc, curr) => acc + curr.medida, 0);
             const aguardando = dadosSemana.filter(d => d.status === 'pendente' || d.status === 'producao').reduce((acc, curr) => acc + curr.medida, 0);
             const pronto = dadosSemana.filter(d => d.status === 'pronto' || d.status === 'saida').reduce((acc, curr) => acc + curr.medida, 0);
             const entregue = dadosSemana.filter(d => d.status === 'entregue').reduce((acc, curr) => acc + curr.medida, 0);
-
             document.getElementById('kpiGeral').innerText = `${totalGeral.toLocaleString()} mts`;
             document.getElementById('kpiSemana').innerText = `${totalSemana.toLocaleString()} mts`;
             document.getElementById('kpiAguardando').innerText = `${aguardando.toLocaleString()} mts`;
@@ -888,75 +968,88 @@ headers: {
             document.getElementById('kpiEntregue').innerText = `${entregue.toLocaleString()} mts`;
         }
 
+        async function carregarDados() {
+            try {
+                mostrarLoading();
+                const res = await fetch(API_URL);
+                const retorno = await res.json();
+                senhaLimite = String(retorno.senha).trim();
+                limiteDiario = parseInt(retorno.limiteDiario) || 850;
+                const percentual = parseFloat(retorno.tolerancia) || 10;
+                limiteToleravel =
+                    limiteDiario + (limiteDiario * percentual / 100);
+                document.getElementById("inputLimite").value =
+                    limiteDiario;
+                const dados = retorno.pedidos;
+                baseDeDados = dados.map((item, index) => ({
+                    id: index + 1,
+                    data: item.Data.split("T")[0],
+                    pedido: String(item.Pedido || ""),
+                    cliente: item["Cliente/Obra"],
+                    produto: item.Produto,
+                    medida: parseInt(item.Medida),
+                    status: (item.Status || "").toLowerCase()
+                }));
+                atualizarTudo();
+            } catch (erro) {
+                console.error("Erro ao carregar dados:", erro);
+            } finally {
+                esconderLoading();
+            }
+        }
 
+        async function alterarSenha() {
+            const senhaAtual = prompt("Digite a senha atual:");
+            if (senhaAtual !== senhaLimite) {
+                alert("Senha incorreta");
+                return;
+            }
+            const novaSenha = prompt("Digite a nova senha:");
+            if (!novaSenha) return;
+            const confirmar = prompt("Confirme a nova senha:");
+            if (novaSenha !== confirmar) {
+                alert("As senhas não coincidem");
+                return;
+            }
+            mostrarLoading();
+            await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain"
+                },
+                body: JSON.stringify({
+                    acao: "alterarSenha",
+                    senha: novaSenha
+                })
+            });
+            senhaLimite = novaSenha;
+            esconderLoading();
+            alert("Senha alterada com sucesso");
+        }
 
-async function carregarDados() {
-    try {
-        mostrarLoading(); // 🔥 MOSTRA
-
-        const res = await fetch(API_URL);
-        const dados = await res.json();
-
-        baseDeDados = dados.map((item, index) => ({
-            id: index + 1,
-            data: item.Data.split("T")[0],
-            pedido: String(item.Pedido || ""),
-            cliente: item["Cliente/Obra"],
-            produto: item.Produto,
-            medida: parseInt(item.Medida),
-            status: (item.Status || "").toLowerCase()
-        }));
-
-        atualizarTudo();
-
-    } catch (erro) {
-        console.error("Erro ao carregar dados:", erro);
-    } finally {
-        esconderLoading(); // 🔥 SEMPRE ESCONDE
-    }
-}
-
-
-
-function alterarSenha() {
-    const senhaAtual = prompt("Digite a senha atual:");
-
-    if (senhaAtual !== senhaLimite) {
-        alert("Senha incorreta!");
-        return;
-    }
-
-    const novaSenha = prompt("Digite a nova senha:");
-    if (!novaSenha) return;
-
-    const confirmar = prompt("Confirme a nova senha:");
-    if (novaSenha !== confirmar) {
-        alert("As senhas não coincidem!");
-        return;
-    }
-
-    senhaLimite = novaSenha;
-    localStorage.setItem("senhaLimite", novaSenha);
-
-    alert("Senha alterada com sucesso!");
-}
-
-function resetarSenha() {
-    const novaSenha = prompt("Digite a nova senha:");
-
-    if (!novaSenha) return;
-
-    const confirmar = prompt("Confirme a nova senha:");
-    if (novaSenha !== confirmar) {
-        alert("As senhas não coincidem!");
-        return;
-    }
-
-    senhaLimite = novaSenha;
-    localStorage.setItem("senhaLimite", novaSenha);
-
-    alert("Senha redefinida com sucesso!");
-}
+        async function resetarSenha() {
+            const novaSenha = prompt("Digite a nova senha:");
+            if (!novaSenha) return;
+            const confirmar = prompt("Confirme a nova senha:");
+            if (novaSenha !== confirmar) {
+                alert("As senhas não coincidem");
+                return;
+            }
+            mostrarLoading();
+            await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain"
+                },
+                body: JSON.stringify({
+                    acao: "alterarSenha",
+                    senha: novaSenha
+                })
+            });
+            senhaLimite = novaSenha;
+            esconderLoading();
+            alert("Senha redefinida.");
+        }
 
         function inicializarGraficos() {
             Chart.defaults.font.family = "'Inter', sans-serif";
@@ -970,110 +1063,83 @@ function resetarSenha() {
                         { label: 'Limite', data: Array(7).fill(limiteDiario), type: 'line', borderColor: '#ef4444', borderDash: [5, 5], pointRadius: 0, fill: false }
                     ]
                 },
-options: {
-    responsive: true,
-    maintainAspectRatio: false,
-layout: {
-    padding: {
-        top: 30
-    }
-},
-
-    onClick: function(evt, elements) {
-        if (!elements.length) return;
-
-        const index = elements[0].index;
-
-        const { inicio } = getIntervaloSemana(dataSelecionada);
-        const dataClicada = new Date(inicio);
-        dataClicada.setDate(inicio.getDate() + index);
-
-        const dataISO = formatToISODate(dataClicada);
-
-        const pedidosDoDia = baseDeDados.filter(item => item.data === dataISO);
-
-        if (pedidosDoDia.length === 0) return;
-
-        let mensagem = `Pedidos do dia ${dataClicada.toLocaleDateString()}:\n\n`;
-
-        pedidosDoDia.forEach(p => {
-            mensagem += `• Pedido ${p.pedido} - ${p.cliente} (${p.medida} mts)\n`;
-        });
-
-        alert(mensagem);
-    },
-
-    plugins: {
-        legend: {
-            display: false,
-            position: 'right'
-        },
-
-
-datalabels: {
-    labels: {
-
-        // 🔹 LABEL INTERNO (pedido)
-        pedido: {
-            display: function(context) {
-                return context.dataset.type !== 'line';
-            },
-            anchor: 'center',
-            align: 'center',
-            color: '#fff',
-            font: {
-                size: 9, // 👈 menor
-                weight: 'bold'
-            },
-            formatter: (value, context) => {
-                if (!value) return '';
-
-                // pega o número do pedido do label
-                return context.dataset.label.replace('Pedido ', '');
-            }
-        },
-
-        // 🔹 LABEL EXTERNO (total)
-        total: {
-            display: function(context) {
-                const dataset = context.dataset;
-                if (dataset.type === 'line') return false;
-
-                const datasets = context.chart.data.datasets.filter(ds => ds.type !== 'line');
-
-                return context.datasetIndex === datasets.length - 1;
-            },
-            anchor: 'end',
-            align: 'top',
-            offset: 8,
-            color: '#111',
-            font: {
-                size: 11,
-                weight: 'bold'
-            },
-            formatter: (value, context) => {
-                const dataIndex = context.dataIndex;
-
-                const total = context.chart.data.datasets.reduce((acc, ds) => {
-                    if (ds.type === 'line') return acc;
-                    return acc + (ds.data[dataIndex] || 0);
-                }, 0);
-
-                if (total === 0) return '';
-
-                return total.toLocaleString();
-            }
-        }
-    }
-}
-
-
-    }
-},
-plugins: [ChartDataLabels, pluginRotulosLinha]
-
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 30
+                        }
+                    },
+                    onClick: function (evt, elements) {
+                        if (!elements.length) return;
+                        const index = elements[0].index;
+                        const { inicio } = getIntervaloSemana(dataSelecionada);
+                        const dataClicada = new Date(inicio);
+                        dataClicada.setDate(inicio.getDate() + index);
+                        const dataISO = formatToISODate(dataClicada);
+                        const pedidosDoDia = baseDeDados.filter(item => item.data === dataISO);
+                        if (pedidosDoDia.length === 0) return;
+                        let mensagem = `Pedidos do dia ${dataClicada.toLocaleDateString()}:\n\n`;
+                        pedidosDoDia.forEach(p => {
+                            mensagem += `• Pedido ${p.pedido} - ${p.cliente} (${p.medida} mts)\n`;
+                        });
+                        alert(mensagem);
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                            position: 'right'
+                        },
+                        datalabels: {
+                            labels: {
+                                pedido: {
+                                    display: function (context) {
+                                        return context.dataset.type !== 'line';
+                                    },
+                                    anchor: 'center',
+                                    align: 'center',
+                                    color: '#fff',
+                                    font: {
+                                        size: 9,
+                                        weight: 'bold'
+                                    },
+                                    formatter: (value, context) => {
+                                        if (!value) return '';
+                                        return context.dataset.label.replace('Pedido ', '');
+                                    }
+                                },
+                                total: {
+                                    display: function (context) {
+                                        const dataset = context.dataset;
+                                        if (dataset.type === 'line') return false;
+                                        const datasets = context.chart.data.datasets.filter(ds => ds.type !== 'line');
+                                        return context.datasetIndex === datasets.length - 1;
+                                    },
+                                    anchor: 'end',
+                                    align: 'top',
+                                    offset: 8,
+                                    color: '#111',
+                                    font: {
+                                        size: 11,
+                                        weight: 'bold'
+                                    },
+                                    formatter: (value, context) => {
+                                        const dataIndex = context.dataIndex;
+                                        const total = context.chart.data.datasets.reduce((acc, ds) => {
+                                            if (ds.type === 'line') return acc;
+                                            return acc + (ds.data[dataIndex] || 0);
+                                        }, 0);
+                                        if (total === 0) return '';
+                                        return total.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels, pluginRotulosLinha]
             });
-
             const statusCtx = document.getElementById('statusChart').getContext('2d');
             statusChart = new Chart(statusCtx, {
                 type: 'doughnut',
@@ -1081,205 +1147,156 @@ plugins: [ChartDataLabels, pluginRotulosLinha]
                     labels: ['Aguardando', 'Produção', 'Pronto', 'Saiu', 'Entregue'],
                     datasets: [{ data: [0, 0, 0, 0, 0], backgroundColor: ['#fcd34d', '#60a5fa', '#34d399', '#fb923c', '#9ca3af'], borderWidth: 0 }]
                 },
-                options: { responsive: true, maintainAspectRatio: false, cutout: '75%', plugins: { legend: { position: 'bottom', labels: { boxWidth: 8, font: { size: 9 } } },         datalabels: {
-                color: '#000',
-                font: {
-                    size: 11,
-                    weight: 'bold'
-                },
-formatter: (value, context) => {
-    if (!value) return ''; // 🔥 não mostra se for 0
-
-    const data = context.chart.data.datasets[0].data;
-    const total = data.reduce((a, b) => a + b, 0);
-
-    if (total === 0) return '';
-
-    const porcentagem = (value / total) * 100;
-
-    return porcentagem.toFixed(1) + '%';
-}
-            }      } }
-            ,
-
-         plugins: [ChartDataLabels]
+                options: {
+                    responsive: true, maintainAspectRatio: false, cutout: '75%', plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 8, font: { size: 9 } } }, datalabels: {
+                            color: '#000',
+                            font: {
+                                size: 11,
+                                weight: 'bold'
+                            },
+                            formatter: (value, context) => {
+                                if (!value) return ''; // 🔥 não mostra se for 0
+                                const data = context.chart.data.datasets[0].data;
+                                const total = data.reduce((a, b) => a + b, 0);
+                                if (total === 0) return '';
+                                const porcentagem = (value / total) * 100;
+                                return porcentagem.toFixed(1) + '%';
+                            }
+                        }
+                    }
+                }
+                ,
+                plugins: [ChartDataLabels]
             }
-        
-        );
+            );
         }
-
 
         function mostrarLoading() {
-    document.getElementById("loading").classList.remove("hidden");
-}
-
-function esconderLoading() {
-    document.getElementById("loading").classList.add("hidden");
-}
-
-
-    function atualizarGraficos(dados) {
-    const { inicio, fim } = getIntervaloSemana(dataSelecionada);
-
-    // 🔹 Dados completos da semana (não filtrados por busca)
-    const dadosSemanaTotal = baseDeDados.filter(item => {
-        const d = parseISOToLocalDate(item.data);
-        return d >= inicio && d <= fim;
-    });
-
-    // 🔹 Agrupar por dia
-    const dias = Array.from({ length: 7 }, () => []);
-    
-    dadosSemanaTotal.forEach(item => {
-        const d = parseISOToLocalDate(item.data);
-        const diff = Math.floor((d - inicio) / (1000 * 60 * 60 * 24));
-        if (diff >= 0 && diff < 7) {
-            dias[diff].push(item);
+            document.getElementById("loading").classList.remove("hidden");
         }
-    });
 
-    // 🔹 Verifica se usa empilhado
-    const usarEmpilhado = dias.every(dia => dia.length <= 10);
+        function esconderLoading() {
+            document.getElementById("loading").classList.add("hidden");
+        }
 
-    // =========================
-    // 📊 MODO 1 - EMPILHADO
-    // =========================
-    if (usarEmpilhado) {
-
-        const pedidosMap = {};
-
-        dias.forEach((dia, index) => {
-            dia.forEach(item => {
-                if (!pedidosMap[item.pedido]) {
-                    pedidosMap[item.pedido] = Array(7).fill(0);
+        function atualizarGraficos(dados) {
+            const { inicio, fim } = getIntervaloSemana(dataSelecionada);
+            const dadosSemanaTotal = baseDeDados.filter(item => {
+                const d = parseISOToLocalDate(item.data);
+                return d >= inicio && d <= fim;
+            });
+            const dias = Array.from({ length: 7 }, () => []);
+            dadosSemanaTotal.forEach(item => {
+                const d = parseISOToLocalDate(item.data);
+                const diff = Math.floor((d - inicio) / (1000 * 60 * 60 * 24));
+                if (diff >= 0 && diff < 7) {
+                    dias[diff].push(item);
                 }
-                pedidosMap[item.pedido][index] += item.medida;
             });
-        });
-
-        const cores = [
-            '#3b82f6','#22c55e','#f59e0b','#ef4444',
-            '#8b5cf6','#06b6d4','#84cc16','#f97316',
-            '#14b8a6','#eab308'
-        ];
-
-        dailyChart.data.datasets = Object.keys(pedidosMap).map((pedido, i) => ({
-            label: `Pedido ${pedido}`,
-            data: pedidosMap[pedido],
-            backgroundColor: cores[i % cores.length],
-            borderRadius: 4,
-            stack: 'stack1'
-        }));
-
-    } 
-    // =========================
-    // 📊 MODO 2 - NORMAL
-    // =========================
-    else {
-
-        const metragem = Array(7).fill(0);
-
-        dias.forEach((dia, i) => {
-            dia.forEach(item => {
-                metragem[i] += item.medida;
-            });
-        });
-
-        dailyChart.data.datasets = [
-            {
-                label: 'Metragem (mts)',
-                data: metragem,
-                backgroundColor: metragem.map(v =>
-                    v > limiteToleravel ? '#7f1d1d' :
-                    v > limiteDiario ? '#ef4444' :
-                    '#3b82f6'
-                ),
-                borderRadius: 6
+            const usarEmpilhado = dias.every(dia => dia.length <= 10);
+            if (usarEmpilhado) {
+                const pedidosMap = {};
+                dias.forEach((dia, index) => {
+                    dia.forEach(item => {
+                        if (!pedidosMap[item.pedido]) {
+                            pedidosMap[item.pedido] = Array(7).fill(0);
+                        }
+                        pedidosMap[item.pedido][index] += item.medida;
+                    });
+                });
+                const cores = [
+                    '#3b82f6', '#22c55e', '#f59e0b', '#ef4444',
+                    '#8b5cf6', '#06b6d4', '#84cc16', '#f97316',
+                    '#14b8a6', '#eab308'
+                ];
+                dailyChart.data.datasets = Object.keys(pedidosMap).map((pedido, i) => ({
+                    label: `Pedido ${pedido}`,
+                    data: pedidosMap[pedido],
+                    backgroundColor: cores[i % cores.length],
+                    borderRadius: 4,
+                    stack: 'stack1'
+                }));
             }
-        ];
-    }
-
-    // =========================
-    // 📈 LINHAS DE LIMITE (SEMPRE)
-    // =========================
-    dailyChart.data.datasets.push(
-        {
-            label: 'Limite',
-            data: Array(7).fill(limiteDiario),
-            type: 'line',
-            borderColor: '#ef4444',
-            borderDash: [5, 5],
-            pointRadius: 0,
-            fill: false
-        },
-        {
-            label: 'Limite Tolerável',
-            data: Array(7).fill(limiteToleravel),
-            type: 'line',
-            borderColor: '#f59e0b',
-            borderDash: [5, 5],
-            pointRadius: 0,
-            fill: false
+            else {
+                const metragem = Array(7).fill(0);
+                dias.forEach((dia, i) => {
+                    dia.forEach(item => {
+                        metragem[i] += item.medida;
+                    });
+                });
+                dailyChart.data.datasets = [
+                    {
+                        label: 'Metragem (mts)',
+                        data: metragem,
+                        backgroundColor: metragem.map(v =>
+                            v > limiteToleravel ? '#7f1d1d' :
+                                v > limiteDiario ? '#ef4444' :
+                                    '#3b82f6'
+                        ),
+                        borderRadius: 6
+                    }
+                ];
+            }
+            dailyChart.data.datasets.push(
+                {
+                    label: 'Limite',
+                    data: Array(7).fill(limiteDiario),
+                    type: 'line',
+                    borderColor: '#ef4444',
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    fill: false
+                },
+                {
+                    label: 'Limite Tolerável',
+                    data: Array(7).fill(limiteToleravel),
+                    type: 'line',
+                    borderColor: '#f59e0b',
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    fill: false
+                }
+            );
+            dailyChart.update();
+            const statusCounts = { pendente: 0, producao: 0, pronto: 0, saida: 0, entregue: 0 };
+            dadosSemanaTotal.forEach(item => {
+                if (statusCounts[item.status] !== undefined) {
+                    statusCounts[item.status] += item.medida;
+                }
+            });
+            statusChart.data.datasets[0].data = [
+                statusCounts.pendente,
+                statusCounts.producao,
+                statusCounts.pronto,
+                statusCounts.saida,
+                statusCounts.entregue
+            ];
+            statusChart.update();
         }
-    );
-
-    dailyChart.update();
-
-    // =========================
-    // 🍩 STATUS (mantido)
-    // =========================
-    const statusCounts = { pendente: 0, producao: 0, pronto: 0, saida: 0, entregue: 0 };
-
-    dadosSemanaTotal.forEach(item => {
-        if (statusCounts[item.status] !== undefined) {
-            statusCounts[item.status] += item.medida;
-        }
-    });
-
-    statusChart.data.datasets[0].data = [
-        statusCounts.pendente,
-        statusCounts.producao,
-        statusCounts.pronto,
-        statusCounts.saida,
-        statusCounts.entregue
-    ];
-
-    statusChart.update();
-}
-
-let carregandoAuto = false;
-
-setInterval(async () => {
-
-    if (carregandoAuto) return;
-
-    const modalAberto = document
-        .getElementById('modalEdit')
-        .classList.contains('active');
-
-    if (!modalAberto) {
-        carregandoAuto = true;
-
-        try {
-            await carregarDados();
-        } finally {
-            carregandoAuto = false;
-        }
-    }
-
-}, 600000);
-
+        let carregandoAuto = false;
+        setInterval(async () => {
+            if (carregandoAuto) return;
+            const modalAberto = document
+                .getElementById('modalEdit')
+                .classList.contains('active');
+            if (!modalAberto) {
+                carregandoAuto = true;
+                try {
+                    await carregarDados();
+                } finally {
+                    carregandoAuto = false;
+                }
+            }
+        }, 600000);
 
     </script>
-
-<div id="loading" class="fixed inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-    <div class="flex flex-col items-center gap-3">
-        <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-        <span class="text-sm font-semibold text-gray-600">Carregando dados...</span>
+    <div id="loading" class="fixed inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="flex flex-col items-center gap-3">
+            <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <span class="text-sm font-semibold text-gray-600">Carregando dados...</span>
+        </div>
     </div>
-</div>
-
-
-
 </body>
+
 </html>
