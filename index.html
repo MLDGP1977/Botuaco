@@ -46,29 +46,49 @@
             text-transform: uppercase;
         }
 
-        .status-pendente {
-            background-color: #fef3c7;
+        .status-aguardando {
+            background-color: #f4bcb7;
+            color: #f71004;
+        }
+
+        .status-agendado {
+            background-color: #edc1ae;
             color: #92400e;
         }
 
-        .status-producao {
+        .status-estribo {
             background-color: #dbeafe;
             color: #1e40af;
         }
 
-        .status-pronto {
+        .status-corte {
             background-color: #d1fae5;
             color: #065f46;
         }
 
-        .status-saida {
-            background-color: #fed7aa;
-            color: #9a3412;
+        .status-amarracao {
+            background-color: #d1c2ef;
+            color: #a060ef;
+        }
+
+        .status-logistica {
+            background-color: #ecf7ae;
+            color: #a2ab2a;
+        }
+
+        .status-saiu {
+            background-color: #aafdfe;
+            color: #1e6a66;
         }
 
         .status-entregue {
-            background-color: #e5e7eb;
-            color: #374151;
+            background-color: #cfd1d4;
+            color: #3a404b;
+        }
+
+        .status-finalizado {
+            background-color: #adafb3;
+            color: #37393c;
         }
 
         .fc {
@@ -143,11 +163,11 @@
         }
 
         .filter-input {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'%3E%3C/path%3E%3C/svg%3E");
+
             background-repeat: no-repeat;
             background-position: 10px center;
             background-size: 18px;
-            padding-left: 38px;
+            padding-left: 55px;
         }
     </style>
 </head>
@@ -155,8 +175,8 @@
 <body class="p-4 md:p-8">
     <div class="max-w-7xl mx-auto">
         <!-- Cabeçalho Principal -->
-        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-6">
-            <div class="flex items-center gap-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4 md:gap-6">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
                 <div class="header-logo-container">
                     <img id="logoSecreto"
                         src="data:image/png;base64,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"
@@ -182,7 +202,7 @@
                                 📅 Selecionar Semana
                             </button>
                             <div id="calendarioWrapper"
-                                class="hidden absolute z-50 bg-white shadow-2xl rounded-2xl p-4 mt-2 border border-gray-100 w-[800px]">
+                                class="hidden absolute z-50 bg-white shadow-2xl rounded-2xl p-4 mt-2 border border-gray-100 w-[90vw] md:w-[700px] ">
                                 <div id="calendario"></div>
                             </div>
                         </div>
@@ -211,7 +231,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-stretch">
             <!-- Coluna de Inserção  Esquerda-->
             <div class="flex flex-col gap-6 h-full">
-                <div class="bg-white w-full lg:max-w-md rounded-3xl shadow-xl border border-gray-100 p-5 md:p-6 min-h-[520px]">
+                <div
+                    class="bg-white w-full lg:max-w-md rounded-3xl shadow-xl border border-gray-100 p-5 md:p-6 min-h-[520px]">
                     <h2 class="font-bold text-gray-700 mb-4 flex items-center gap-2 text-sm uppercase tracking-wide">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20"
                             fill="currentColor">
@@ -247,11 +268,15 @@
                             <label class="text-xs font-semibold text-gray-500 block mb-1">Status</label>
                             <select id="formStatus"
                                 class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-100">
-                                <option value="pendente">Aguardando</option>
-                                <option value="producao">Em Produção</option>
-                                <option value="pronto">Pronto</option>
-                                <option value="saida">Saiu para Entrega</option>
+                                <option value="aguardando">Aguardando data</option>
+                                <option value="agendado">Agendado</option>
+                                <option value="estribo">Estribo</option>
+                                <option value="corte">Corte</option>
+                                <option value="amarracao">Amarração</option>
+                                <option value="logistica">Logística</option>
+                                <option value="saiu">Saiu Entregue</option>
                                 <option value="entregue">Entregue</option>
+                                <option value="finalizado">Finalizado</option>
                             </select>
                         </div>
                     </div>
@@ -267,7 +292,8 @@
                 </div>
 
                 <!-- Composição da Produção -->
-                <div class="bg-white w-full lg:max-w-md rounded-3xl shadow-xl border border-gray-100 p-5 md:p-6 min-h-[250px]">
+                <div
+                    class="bg-white w-full lg:max-w-md rounded-3xl shadow-xl border border-gray-100 p-5 md:p-6 min-h-[250px]">
                     <h2 class="font-bold text-gray-700 mb-4 text-xs text-center uppercase">Composição da Produção</h2>
                     <div style="height:250px;">
                         <canvas id="statusChart"></canvas>
@@ -295,8 +321,8 @@
                     </div>
                     <div
                         class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-emerald-500">
-                        <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Pronto</p>
-                        <h3 class="text-lg font-bold text-gray-800 mt-1" id="kpiPronto">0 mts</h3>
+                        <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Produção</p>
+                        <h3 class="text-lg font-bold text-gray-800 mt-1" id="kpiProducao">0 mts</h3>
                     </div>
                     <div
                         class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-indigo-500">
@@ -319,33 +345,56 @@
                     <div
                         class="p-4 bg-gray-50/50 border-b border-gray-100 flex flex-col md:flex-row gap-4 items-center">
                         <div class="relative flex-1 w-full">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                🔍
+                            </span>
                             <input type="text" id="filtroTexto" oninput="atualizarTudo()"
-                                placeholder="Pesquisar cliente ou produto..."
-                                class="w-full filter-input bg-white border border-gray-200 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-100 transition-all">
+                                placeholder="Buscar por cliente, pedido ou data..."
+                                class="w-full bg-white border border-gray-200 rounded-xl pl-10 pr-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-100">
                         </div>
                         <div class="w-full md:w-48">
                             <select id="filtroStatus" onchange="atualizarTudo()"
                                 class="w-full bg-white border border-gray-200 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-100 transition-all font-semibold text-gray-600">
                                 <option value="todos">Todos os Status</option>
-                                <option value="pendente">Aguardando</option>
-                                <option value="producao">Em Produção</option>
-                                <option value="pronto">Pronto</option>
-                                <option value="saida">Saiu para Entrega</option>
+                                <option value="aguardando">Aguardando data</option>
+                                <option value="agendado">Agendado</option>
+                                <option value="estribo">Estribo</option>
+                                <option value="corte">Corte</option>
+                                <option value="amarracao">Amarração</option>
+                                <option value="logistica">Logística</option>
+                                <option value="saiu">Saiu Entregue</option>
                                 <option value="entregue">Entregue</option>
+                                <option value="finalizado">Finalizado</option>
                             </select>
                         </div>
+                        <div class="flex flex-wrap gap-4 text-xs font-semibold text-gray-600">
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" id="filtroSemana" onchange="atualizarTudo()">
+                                Semana
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" id="mostrarEntregue" onchange="atualizarTudo()">
+                                Entregue
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" id="mostrarFinalizado" onchange="atualizarTudo()">
+                                Finalizado
+                            </label>
+                        </div>
                     </div>
-
                     <div class="overflow-x-auto max-h-[260px] overflow-y-auto">
                         <table class="w-full text-left border-collapse" id="tabelaRomaneios">
                             <thead>
                                 <tr class="bg-gray-50/80 text-gray-400 text-[10px] font-bold uppercase tracking-wider">
-                                    <th class="px-6 py-3">Data</th>
-                                    <th class="px-6 py-3">Pedido</th>
-                                    <th class="px-6 py-3">Cliente / Obra</th>
-                                    <th class="px-6 py-3">Produto</th>
-                                    <th class="px-6 py-3 text-right">Medida</th>
-                                    <th class="px-6 py-3 text-center">Status</th>
+                                    <th class="px-6 py-3 cursor-pointer" onclick="ordenarPor('data')">Data</th>
+                                    <th class="px-6 py-3 cursor-pointer" onclick="ordenarPor('pedido')">Pedido</th>
+                                    <th class="px-6 py-3 cursor-pointer" onclick="ordenarPor('cliente')">Cliente / Obra
+                                    </th>
+                                    <th class="px-6 py-3 cursor-pointer" onclick="ordenarPor('produto')">Produto</th>
+                                    <th class="px-6 py-3 text-right cursor-pointer" onclick="ordenarPor('medida')">
+                                        Medida</th>
+                                    <th class="px-6 py-3 text-center cursor-pointer" onclick="ordenarPor('status')">
+                                        Status</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100 text-sm" id="corpoTabela">
@@ -406,11 +455,15 @@
                     <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Status Atual</label>
                     <select id="editStatus"
                         class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm font-bold">
-                        <option value="pendente">Aguardando</option>
-                        <option value="producao">Em Produção</option>
-                        <option value="pronto">Pronto</option>
-                        <option value="saida">Saiu para Entrega</option>
+                        <option value="aguardando">Aguardando data</option>
+                        <option value="agendado">Agendado</option>
+                        <option value="estribo">Estribo</option>
+                        <option value="corte">Corte</option>
+                        <option value="amarracao">Amarração</option>
+                        <option value="logistica">Logística</option>
+                        <option value="saiu">Saiu Entregue</option>
                         <option value="entregue">Entregue</option>
+                        <option value="finalizado">Finalizado</option>
                     </select>
                 </div>
                 <div>
@@ -483,10 +536,22 @@
         const API_URL = "https://script.google.com/macros/s/AKfycbxS3HLzR7TD05aBnXJcsgen7c8x5ep_jIBSwtcer3X5G-vENs1nDyM1ivRVS_6PCbp7XA/exec";
         let dailyChart, statusChart;
         let dataSelecionada = new Date();
-
         function parseISOToLocalDate(dateStr) {
-            const [year, month, day] = dateStr.split('-').map(Number);
-            return new Date(year, month - 1, day);
+            if (!dateStr) return null;
+
+            // formato YYYY-MM-DD
+            if (dateStr.includes('-')) {
+                const [year, month, day] = dateStr.split('-').map(Number);
+                return new Date(year, month - 1, day);
+            }
+
+            // formato DD/MM/YYYY
+            if (dateStr.includes('/')) {
+                const [day, month, year] = dateStr.split('/').map(Number);
+                return new Date(year, month - 1, day);
+            }
+
+            return null;
         }
 
         function formatToISODate(date) {
@@ -495,34 +560,26 @@
             const day = String(date.getDate()).padStart(2, '0');
             return `${year}-${month}-${day}`;
         }
-
         window.onload = async () => {
             document.getElementById('inputLimite').value = limiteDiario;
             document.getElementById('formDia').value = formatToISODate(dataSelecionada);
-
             inicializarGraficos();
             inicializarCalendario();
             await carregarDados();
-
             document.getElementById('formDia').addEventListener('change', (e) => {
                 dataSelecionada = parseISOToLocalDate(e.target.value);
                 atualizarTudo();
             });
-
             document.addEventListener("keydown", function (e) {
                 if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "s") {
                     resetarSenha();
                 }
             });
-
             document.getElementById('inputLimite').addEventListener('input', (e) => {
                 limiteDiario = parseInt(e.target.value) || 0;
                 atualizarTudo();
             });
-
-
             const inputLimite = document.getElementById('inputLimite');
-
             inputLimite.addEventListener('click', async () => {
                 const senha = prompt("Digite a senha para alterar o limite:");
                 if (senha !== senhaLimite) {
@@ -554,19 +611,13 @@
                 inputLimite.value = valorNumero;
                 atualizarTudo();
             });
-
             inputLimite.addEventListener('blur', () => {
                 inputLimite.setAttribute("readonly", true);
                 autorizadoLimite = false;
             });
-
-
-
         };
 
-
         let calendar;
-
         function inicializarCalendario() {
             const el = document.getElementById('calendario');
             document.getElementById('btnCalendario').addEventListener('click', () => {
@@ -579,50 +630,36 @@
             document.addEventListener('click', function (e) {
                 const wrapper = document.getElementById('calendarioWrapper');
                 const btn = document.getElementById('btnCalendario');
-
                 if (!wrapper.contains(e.target) && !btn.contains(e.target)) {
                     wrapper.classList.add('hidden');
                 }
             });
-
             calendar = new FullCalendar.Calendar(el, {
                 initialView: 'dayGridMonth',
-                contentHeight: 280,
-
+                contentHeight: 300,
                 locale: 'pt-br',
-
                 dateClick: function (info) {
                     dataSelecionada = new Date(info.dateStr);
                     document.getElementById('formDia').value = info.dateStr;
                     atualizarTudo();
                 },
-
                 eventContent: function (info) {
                     return {
                         html: `
-            <div style="font-size:10px; line-height:1.2; color:#fff;">
-                <strong>${info.event.title}</strong><br/>
-                ${info.event.extendedProps.count || 0} pedidos
-            </div>
-        `
+                    <div style="font-size:10px; line-height:1.2; color:#fff;">
+                    <strong>${info.event.title}</strong><br/>
+                    ${info.event.extendedProps.count || 0} pedidos
+                    </div>
+                    `
                     };
                 },
-
-
-
                 events: gerarEventosCalendario()
             });
-
-
             calendar.render();
         }
 
-
-
-
         function gerarEventosCalendario() {
             const mapa = {};
-
             baseDeDados.forEach(item => {
                 if (!mapa[item.data]) {
                     mapa[item.data] = {
@@ -631,23 +668,16 @@
                         titulo: []
                     };
                 }
-
                 mapa[item.data].total += item.medida;
-
                 if (item.status === 'entregue') {
                     mapa[item.data].entregue += item.medida;
                 }
-
                 mapa[item.data].titulo.push(item.cliente);
             });
-
             const eventos = [];
-
             Object.keys(mapa).forEach(data => {
                 const d = mapa[data];
-
                 let cor = '#3b82f6'; // azul padrão
-
                 if (d.entregue === d.total) {
                     cor = '#22c55e'; // verde = tudo entregue
                 } else if (d.entregue === 0) {
@@ -655,7 +685,6 @@
                 } else {
                     cor = '#f59e0b'; // amarelo = parcial
                 }
-
                 eventos.push({
                     title: `${d.total.toLocaleString()} mts`,
                     start: data,
@@ -667,18 +696,13 @@
                         count: d.titulo.length
                     }
                 });
-
             });
-
             return eventos;
         }
 
-
-
-
-
         function getIntervaloSemana(data) {
             const d = new Date(data);
+            d.setHours(0, 0, 0, 0);
             const diaDaSemana = d.getDay();
             const inicio = new Date(d);
             inicio.setDate(d.getDate() - diaDaSemana);
@@ -691,27 +715,41 @@
 
         function atualizarTudo() {
             const { inicio, fim } = getIntervaloSemana(dataSelecionada);
-            document.getElementById('displaySemana').innerText =
-                `${inicio.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} a ${fim.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}`;
-
+            document.getElementById('displaySemana').innerText = `${inicio.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} a ${fim.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}`;
             const busca = document.getElementById('filtroTexto').value.toLowerCase();
             const statusFiltro = document.getElementById('filtroStatus').value;
-
-            // Filtro Principal: Semana + Busca + Status
+            const usarFiltroSemana = document.getElementById('filtroSemana').checked;
+            const mostrarEntregue = document.getElementById('mostrarEntregue').checked;
+            const mostrarFinalizado = document.getElementById('mostrarFinalizado').checked;
             const dadosFiltrados = baseDeDados.filter(item => {
-                const dataItem = parseISOToLocalDate(item.data);
-                const dentroDaSemana = dataItem >= inicio && dataItem <= fim;
+                let dentroDaSemana = true;
 
-                const matchesBusca = item.cliente.toLowerCase().includes(busca) || item.produto.toLowerCase().includes(busca) || (item.pedido && item.pedido.toLowerCase().includes(busca));
+                if (usarFiltroSemana) {
+                    if (!item.data) {
+                        dentroDaSemana = false; // sem data não entra na semana
+                    } else {
+                        const dataItem = parseISOToLocalDate(item.data);
+                        dentroDaSemana =
+                            dataItem.getTime() >= inicio.getTime() &&
+                            dataItem.getTime() <= fim.getTime();
+                    }
+                }
+
+                const dataFormatada = item.data ? formatarDataBusca(item.data) : 'sem data';
+                const matchesBusca =
+                    item.cliente.toLowerCase().includes(busca) ||
+                    item.produto.toLowerCase().includes(busca) ||
+                    (item.pedido && item.pedido.toLowerCase().includes(busca)) ||
+                    dataFormatada.includes(busca);
                 const matchesStatus = statusFiltro === 'todos' || item.status === statusFiltro;
-                return dentroDaSemana && matchesBusca && matchesStatus;
+                const filtroEntregue = mostrarEntregue || item.status !== 'entregue';
+                const filtroFinalizado = mostrarFinalizado || item.status !== 'finalizado';
+                return dentroDaSemana && matchesBusca && matchesStatus && filtroEntregue && filtroFinalizado;
             });
-
             if (calendar) {
                 calendar.removeAllEvents();
                 calendar.addEventSource(gerarEventosCalendario());
             }
-
             renderizarTabela(dadosFiltrados);
             atualizarGraficos(dadosFiltrados);
             atualizarKPIs(dadosFiltrados);
@@ -720,21 +758,17 @@
         function renderizarTabela(dados) {
             const corpo = document.getElementById('corpoTabela');
             corpo.innerHTML = '';
-
             if (dados.length === 0) {
                 corpo.innerHTML = '<tr><td colspan="6" class="px-6 py-12 text-center text-gray-400 italic">Nenhum romaneio encontrado para os filtros aplicados.</td></tr>';
                 return;
             }
-
-            dados.sort((a, b) => new Date(a.data) - new Date(b.data));
-
+            ordenarDados(dados);
             dados.forEach(item => {
                 const tr = document.createElement('tr');
                 tr.className = `clickable ${item.medida > limiteDiario ? 'bg-red-50/30' : ''}`;
                 tr.onclick = () => abrirEdicao(item.id);
-
                 tr.innerHTML = `
-                    <td class="px-6 py-4 font-bold text-gray-500 text-xs">${formatarData(item.data)}</td>
+                    <td class="px-6 py-4 font-bold text-gray-500 text-xs">${item.data ? formatarData(item.data) : 'Sem data'}</td>
 		    <td class="px-6 py-4 font-mono text-xs text-gray-600">${item.pedido || '-'}</td>
                     <td class="px-6 py-4 font-semibold text-gray-800">${item.cliente}</td>
                     <td class="px-6 py-4 text-gray-500 text-xs">${item.produto}</td>
@@ -748,12 +782,9 @@
         function abrirEdicao(id) {
             const item = baseDeDados.find(b => b.id === id);
             if (!item) return;
-
             document.getElementById('editId').value = item.id;
             document.getElementById('editCliente').value = item.cliente;
             document.getElementById('editData').value = item.data;
-
-
             document.getElementById('editMedida').value = item.medida;
             document.getElementById('editStatus').value = item.status;
             document.getElementById('editProduto').value = item.produto;
@@ -770,47 +801,76 @@
         async function salvarEdicao() {
             try {
                 mostrarLoading();
-
                 const id = parseInt(document.getElementById('editId').value);
                 const item = baseDeDados.find(b => b.id === id);
-
                 if (!item) {
                     alert("Item não encontrado");
                     return;
                 }
-
                 const novoCliente = document.getElementById('editCliente').value;
                 const novoData = document.getElementById('editData').value;
-                const novoMedida = parseInt(document.getElementById('editMedida').value);
+                const novoMedida = Number(document.getElementById('editMedida').value);
                 const novoStatus = document.getElementById('editStatus').value;
                 const novoProduto = document.getElementById('editProduto').value;
-
-                // 🔹 TOTAL DO DIA (sem o item atual)
-                const totalDoDia = baseDeDados
-                    .filter(b => b.data === novoData && b.id !== item.id)
-                    .reduce((acc, b) => acc + b.medida, 0);
-
-                const novoTotal = totalDoDia + novoMedida;
-
-                // 🔴 BLOQUEIO TOTAL
-                if (novoTotal > limiteToleravel) {
-                    alert(`❌ Limite tolerável do dia (${limiteToleravel} mts) excedido.\nTotal ficaria: ${novoTotal} mts`);
+                // ==========================
+                // ✅ VALIDAÇÕES BÁSICAS
+                // ==========================
+                if (novoStatus !== 'aguardando' && !novoData) {
+                    alert('Preencha a data!');
                     return;
                 }
+                if (!novoCliente || !novoMedida || isNaN(novoMedida)) {
+                    alert('Preencha Cliente e Medida corretamente.');
+                    return;
+                }
+                const somenteStatusAlterado = item.status !== novoStatus && Number(item.medida) === Number(novoMedida) && (item.data || '') === (novoData || '');
+                // ==========================
+                // 🔹 TOTAL DO DIA (sem o item atual)
+                // ==========================
+                const totalDoDia = baseDeDados
+                    .filter(b => b.data === novoData && b.id !== item.id)
+                    .reduce((acc, b) => acc + Number(b.medida), 0);
+                const novoTotal = totalDoDia + novoMedida;
 
-                // 🟡 LIBERA COM SENHA
-                if (novoTotal > limiteDiario) {
-                    const senha = prompt(
-                        `⚠️ Limite diário (${limiteDiario} mts) será ultrapassado.\nTotal do dia: ${novoTotal} mts\nDigite a senha:`
-                    );
-
-                    if (senha !== senhaLimite) {
-                        alert("Senha incorreta! Alteração bloqueada.");
+                if (!somenteStatusAlterado) {
+                    // REGRA SEM DATA (AGUARDANDO)
+                    if (!novoData) {
+                        // BLOQUEIO TOTAL
+                        if (novoMedida > limiteToleravel) {
+                            alert(`❌ Um lançamento sem data não pode ultrapassar ${limiteToleravel} mts.`);
+                            return;
+                        }
+                        // LIBERA COM SENHA
+                        if (novoMedida > limiteDiario) {
+                            const senha = prompt(`⚠️ Acima do limite (${limiteDiario} mts).\nDigite a senha:`);
+                            if (senha !== senhaLimite) {
+                                alert("Senha incorreta! Alteração bloqueada.");
+                                return;
+                            }
+                        }
+                    }
+                    //  REGRA COM DATA
+                    //  BLOQUEIO TOTAL
+                    if (novoData && novoTotal > limiteToleravel) {
+                        alert(`❌ Limite tolerável do dia (${limiteToleravel} mts) excedido.\nTotal ficaria: ${novoTotal} mts`);
                         return;
+                    }
+                    // LIBERA COM SENHA
+                    if (novoData && novoTotal > limiteDiario) {
+                        const senha = prompt(
+                            `⚠️ Limite diário (${limiteDiario} mts) será ultrapassado.\nTotal do dia: ${novoTotal} mts\nDigite a senha:`
+                        );
+
+                        if (senha !== senhaLimite) {
+                            alert("Senha incorreta! Alteração bloqueada.");
+                            return;
+                        }
                     }
                 }
 
+                // ==========================
                 // 🚀 ENVIA PARA API
+                // ==========================
                 await fetch(API_URL, {
                     method: "POST",
                     headers: {
@@ -819,7 +879,7 @@
                     body: JSON.stringify({
                         acao: "editar",
                         pedido: item.pedido,
-                        data: novoData,
+                        data: novoData || null,
                         cliente: novoCliente,
                         produto: novoProduto,
                         medida: novoMedida,
@@ -837,9 +897,6 @@
                 esconderLoading();
             }
         }
-
-
-
 
 
         async function excluirRegistro() {
@@ -887,7 +944,7 @@
         async function adicionarRegistro() {
             const cliente = document.getElementById('formCliente').value;
             const pedido = document.getElementById('formPedido').value.trim();
-            const medida = parseInt(document.getElementById('formMedida').value);
+            const medida = Number(document.getElementById('formMedida').value);
             const data = document.getElementById('formDia').value;
             const status = document.getElementById('formStatus').value;
             const produto = document.getElementById('formProduto').value;
@@ -895,7 +952,11 @@
                 .filter(item => item.data === data)
                 .reduce((acc, item) => acc + item.medida, 0);
             const novoTotal = totalDoDia + medida;
-            if (!cliente || !medida || !data) {
+            if (status !== 'aguardando' && !data) {
+                alert('Preencha a data!');
+                return;
+            }
+            if (!cliente || !medida) {
                 alert('Preencha Cliente, Medida e Data.');
                 return;
             }
@@ -906,13 +967,25 @@
                 abrirEdicao(existente.id);
                 return;
             }
-
+            if (!data) {
+                if (medida > limiteToleravel) {
+                    alert(`❌ Um lançamento não pode ultrapassar ${limiteToleravel} mts.`);
+                    return;
+                }
+                if (medida > limiteDiario) {
+                    const senha = prompt(`⚠️ Acima do limite (${limiteDiario} mts).\nDigite a senha para liberar:`);
+                    if (senha !== senhaLimite) {
+                        alert("Senha incorreta! Lançamento bloqueado.");
+                        return;
+                    }
+                }
+            }
             // 🔴 BLOQUEIO TOTAL
-            if (novoTotal > limiteToleravel) {
+            if (data && novoTotal > limiteToleravel) {
                 alert(`❌ Limite máximo tolerável de ${limiteToleravel} mts excedido.\nLançamento NÃO permitido.`);
                 return;
             }
-            if (novoTotal > limiteDiario) {
+            if (data && novoTotal > limiteDiario) {
                 const senha = prompt(`⚠️ Acima do limite diário (${limiteDiario} mts).\nDigite a senha para liberar:`);
                 if (senha !== senhaLimite) {
                     alert("Senha incorreta! Lançamento bloqueado.");
@@ -928,7 +1001,7 @@
                     },
                     body: JSON.stringify({
                         acao: "inserir",
-                        data: data,
+                        data: data || null,
                         pedido: pedido,
                         cliente: cliente,
                         produto: produto,
@@ -954,23 +1027,86 @@
         }
 
         function atualizarKPIs(dadosSemana) {
-            const totalGeral = baseDeDados
-                .filter(item => item.status !== 'entregue')
-                .reduce((acc, curr) => acc + curr.medida, 0);
-            const totalSemana = dadosSemana.reduce((acc, curr) => acc + curr.medida, 0);
-            const aguardando = dadosSemana.filter(d => d.status === 'pendente' || d.status === 'producao').reduce((acc, curr) => acc + curr.medida, 0);
-            const pronto = dadosSemana.filter(d => d.status === 'pronto' || d.status === 'saida').reduce((acc, curr) => acc + curr.medida, 0);
-            const entregue = dadosSemana.filter(d => d.status === 'entregue').reduce((acc, curr) => acc + curr.medida, 0);
-            document.getElementById('kpiGeral').innerText = `${totalGeral.toLocaleString()} mts`;
-            document.getElementById('kpiSemana').innerText = `${totalSemana.toLocaleString()} mts`;
-            document.getElementById('kpiAguardando').innerText = `${aguardando.toLocaleString()} mts`;
-            document.getElementById('kpiPronto').innerText = `${pronto.toLocaleString()} mts`;
-            document.getElementById('kpiEntregue').innerText = `${entregue.toLocaleString()} mts`;
+
+            // ==========================
+            // 🔵 BASE TOTAL
+            // ==========================
+            const base = baseDeDados;
+
+            // ==========================
+            // 🔵 TOTAL GERAL (sem entregue/finalizado)
+            // ==========================
+            const totalGeral = base
+                .filter(item => {
+                    const status = (item.status || '').toLowerCase();
+                    return !status.includes('entregue') && !status.includes('finalizado');
+                })
+                .reduce((acc, curr) => acc + Number(curr.medida), 0);
+
+            // ==========================
+            // 🟡 SEMANA SELECIONADA
+            // ==========================
+            const totalSemana = dadosSemana
+                .reduce((acc, curr) => acc + Number(curr.medida), 0);
+
+            // ==========================
+            // 🔵 PENDENTE (base total)
+            // ==========================
+            const pendente = base
+                .filter(item => {
+                    const status = (item.status || '').toLowerCase();
+                    return status.includes('aguardando') || status.includes('agendado');
+                })
+                .reduce((acc, curr) => acc + Number(curr.medida), 0);
+
+            // ==========================
+            // 🔵 PRODUÇÃO (base total)
+            // ==========================
+            const producao = base
+                .filter(item => {
+                    const status = (item.status || '').toLowerCase();
+                    return (
+                        status.includes('estribo') ||
+                        status.includes('corte') ||
+                        status.includes('amarra') ||
+                        status.includes('log') ||
+                        status.includes('saiu')
+                    );
+                })
+                .reduce((acc, curr) => acc + Number(curr.medida), 0);
+
+            // ==========================
+            // 🔵 ENTREGUE (base total)
+            // ==========================
+            const entregue = base
+                .filter(item => {
+                    const status = (item.status || '').toLowerCase();
+                    return status.includes('entregue') || status.includes('finalizado');
+                })
+                .reduce((acc, curr) => acc + Number(curr.medida), 0);
+
+            // ==========================
+            // 🖥️ ATUALIZA UI
+            // ==========================
+            document.getElementById('kpiGeral').innerText =
+                `${totalGeral.toLocaleString()} mts`;
+
+            document.getElementById('kpiSemana').innerText =
+                `${totalSemana.toLocaleString()} mts`;
+
+            document.getElementById('kpiAguardando').innerText =
+                `${pendente.toLocaleString()} mts`;
+
+            document.getElementById('kpiProducao').innerText =
+                `${producao.toLocaleString()} mts`;
+
+            document.getElementById('kpiEntregue').innerText =
+                `${entregue.toLocaleString()} mts`;
         }
 
-        async function carregarDados() {
+        async function carregarDados(silencioso = false) {
             try {
-                mostrarLoading();
+                if (!silencioso) mostrarLoading();
                 const res = await fetch(API_URL);
                 const retorno = await res.json();
                 senhaLimite = String(retorno.senha).trim();
@@ -981,20 +1117,25 @@
                 document.getElementById("inputLimite").value =
                     limiteDiario;
                 const dados = retorno.pedidos;
-                baseDeDados = dados.map((item, index) => ({
-                    id: index + 1,
-                    data: item.Data.split("T")[0],
-                    pedido: String(item.Pedido || ""),
-                    cliente: item["Cliente/Obra"],
-                    produto: item.Produto,
-                    medida: parseInt(item.Medida),
-                    status: (item.Status || "").toLowerCase()
-                }));
+baseDeDados = dados.map((item, index) => {
+    const dataStr = item.Data ? item.Data.split("T")[0] : null;
+
+    return {
+        id: index + 1,
+        data: dataStr, // mantém para exibição
+        dataObj: dataStr ? parseISOToLocalDate(dataStr) : null, // 👈 AQUI É A CHAVE
+        pedido: String(item.Pedido || ""),
+        cliente: item["Cliente/Obra"],
+        produto: item.Produto,
+        medida: parseInt(item.Medida),
+        status: (item.Status || "").toLowerCase()
+    };
+});
                 atualizarTudo();
             } catch (erro) {
                 console.error("Erro ao carregar dados:", erro);
             } finally {
-                esconderLoading();
+                if (!silencioso) esconderLoading();
             }
         }
 
@@ -1087,6 +1228,23 @@
                         alert(mensagem);
                     },
                     plugins: {
+                        tooltip: {
+                            enabled: true,
+                            callbacks: {
+                                label: function (context) {
+                                    // Recupera o valor (metragem) e o nome do dataset (ex: "Pedido 21086")
+                                    const valor = context.parsed.y;
+                                    const labelPedido = context.dataset.label;
+                                    const numeroPedido = labelPedido.replace('Pedido ', '').trim();
+                                    const pedidoInfo = baseDeDados.find(item => String(item.pedido).trim() === numeroPedido);
+                                    const cliente = pedidoInfo ? pedidoInfo.cliente : 'Cliente não encontrado';
+                                    if (valor > 0) {
+                                        return `${labelPedido} - ${cliente}: ${valor} mts`;
+                                    }
+                                    return null;
+                                }
+                            }
+                        },
                         legend: {
                             display: false,
                             position: 'right'
@@ -1101,9 +1259,12 @@
                                     align: 'center',
                                     color: '#fff',
                                     font: {
-                                        size: 9,
+                                        size: 11,
                                         weight: 'bold'
                                     },
+                                    textStrokeColor: '#000',
+                                    textStrokeWidth: 2,
+
                                     formatter: (value, context) => {
                                         if (!value) return '';
                                         return context.dataset.label.replace('Pedido ', '');
@@ -1119,9 +1280,9 @@
                                     anchor: 'end',
                                     align: 'top',
                                     offset: 8,
-                                    color: '#111',
+                                    color: '#000',
                                     font: {
-                                        size: 11,
+                                        size: 13,
                                         weight: 'bold'
                                     },
                                     formatter: (value, context) => {
@@ -1144,11 +1305,11 @@
             statusChart = new Chart(statusCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Aguardando', 'Produção', 'Pronto', 'Saiu', 'Entregue'],
-                    datasets: [{ data: [0, 0, 0, 0, 0], backgroundColor: ['#fcd34d', '#60a5fa', '#34d399', '#fb923c', '#9ca3af'], borderWidth: 0 }]
+                    labels: ['Aguardando data', 'Agendado', 'Estribo', 'Corte', 'Amarração', 'Logística', 'Saiu Entregue'],
+                    datasets: [{ data: [0, 0, 0, 0, 0, 0, 0], backgroundColor: ['#f71004', '#92400e', '#1e40af', '#065f46', '#a060ef', '#a2ab2a', '#1e6a66'], borderWidth: 0 }]
                 },
                 options: {
-                    responsive: true, maintainAspectRatio: false, cutout: '75%', plugins: {
+                    responsive: true, maintainAspectRatio: false, cutout: '50%', plugins: {
                         legend: { position: 'bottom', labels: { boxWidth: 8, font: { size: 9 } } }, datalabels: {
                             color: '#000',
                             font: {
@@ -1182,19 +1343,18 @@
 
         function atualizarGraficos(dados) {
             const { inicio, fim } = getIntervaloSemana(dataSelecionada);
-            const dadosSemanaTotal = baseDeDados.filter(item => {
-                const d = parseISOToLocalDate(item.data);
-                return d >= inicio && d <= fim;
-            });
+const dadosSemanaTotal = baseDeDados.filter(item => {
+    return item.dataObj && item.dataObj >= inicio && item.dataObj <= fim;
+});
             const dias = Array.from({ length: 7 }, () => []);
-            dadosSemanaTotal.forEach(item => {
-                const d = parseISOToLocalDate(item.data);
-                const diff = Math.floor((d - inicio) / (1000 * 60 * 60 * 24));
+            baseDeDados.forEach(item => {
+                const d = item.dataObj;
+                const diff = Math.floor((item.dataObj - inicio) / (1000 * 60 * 60 * 24));
                 if (diff >= 0 && diff < 7) {
                     dias[diff].push(item);
                 }
             });
-            const usarEmpilhado = dias.every(dia => dia.length <= 10);
+            const usarEmpilhado = dias.every(dia => dia.length <= 99999);
             if (usarEmpilhado) {
                 const pedidosMap = {};
                 dias.forEach((dia, index) => {
@@ -1259,18 +1419,27 @@
                 }
             );
             dailyChart.update();
-            const statusCounts = { pendente: 0, producao: 0, pronto: 0, saida: 0, entregue: 0 };
-            dadosSemanaTotal.forEach(item => {
-                if (statusCounts[item.status] !== undefined) {
-                    statusCounts[item.status] += item.medida;
-                }
+
+            const statusCounts = { aguardando: 0, agendado: 0, estribo: 0, corte: 0, amarracao: 0, logistica: 0, saiu: 0 };
+            baseDeDados.forEach(item => {
+                const status = (item.status || '').toLowerCase();
+
+                if (status.includes('aguardando')) statusCounts.aguardando += item.medida;
+                else if (status.includes('agendado')) statusCounts.agendado += item.medida;
+                else if (status.includes('estribo')) statusCounts.estribo += item.medida;
+                else if (status.includes('corte')) statusCounts.corte += item.medida;
+                else if (status.includes('amarracao')) statusCounts.amarracao += item.medida;
+                else if (status.includes('logistica')) statusCounts.logistica += item.medida;
+                else if (status.includes('saiu')) statusCounts.saiu += item.medida;
             });
             statusChart.data.datasets[0].data = [
-                statusCounts.pendente,
-                statusCounts.producao,
-                statusCounts.pronto,
-                statusCounts.saida,
-                statusCounts.entregue
+                statusCounts.aguardando,
+                statusCounts.agendado,
+                statusCounts.estribo,
+                statusCounts.corte,
+                statusCounts.amarracao,
+                statusCounts.logistica,
+                statusCounts.saiu
             ];
             statusChart.update();
         }
@@ -1283,12 +1452,51 @@
             if (!modalAberto) {
                 carregandoAuto = true;
                 try {
-                    await carregarDados();
+                    await carregarDados(true);
                 } finally {
                     carregandoAuto = false;
                 }
             }
-        }, 600000);
+        }, 30000);
+
+        let colunaOrdenacao = 'data';
+        let ordemCrescente = true;
+        function ordenarDados(dados) {
+            return dados.sort((a, b) => {
+                let valA = a[colunaOrdenacao];
+                let valB = b[colunaOrdenacao];
+                if (colunaOrdenacao === 'data') {
+                    valA = new Date(valA);
+                    valB = new Date(valB);
+                }
+                if (colunaOrdenacao === 'medida') {
+                    valA = Number(valA);
+                    valB = Number(valB);
+                }
+                if (typeof valA === 'string') {
+                    valA = valA.toLowerCase();
+                    valB = valB.toLowerCase();
+                }
+                if (valA < valB) return ordemCrescente ? -1 : 1;
+                if (valA > valB) return ordemCrescente ? 1 : -1;
+                return 0;
+            });
+        }
+
+        function ordenarPor(coluna) {
+            if (colunaOrdenacao === coluna) {
+                ordemCrescente = !ordemCrescente; // inverte
+            } else {
+                colunaOrdenacao = coluna;
+                ordemCrescente = true;
+            }
+            atualizarTudo();
+        }
+
+        function formatarDataBusca(dataStr) {
+            const d = parseISOToLocalDate(dataStr);
+            return d.toLocaleDateString('pt-BR');
+        }
 
     </script>
     <div id="loading" class="fixed inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50 hidden">
