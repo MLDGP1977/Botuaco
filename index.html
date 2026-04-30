@@ -700,25 +700,25 @@
             return eventos;
         }
 
-function getIntervaloSemana(data) {
+        function getIntervaloSemana(data) {
 
-    const d = new Date(data);
-    d.setHours(0,0,0,0);
+            const d = new Date(data);
+            d.setHours(0, 0, 0, 0);
 
-    // força domingo como início
-    const dia = d.getDay(); // 0=Dom ...6=Sáb
+            // força domingo como início
+            const dia = d.getDay(); // 0=Dom ...6=Sáb
 
-    const inicio = new Date(d);
-    inicio.setDate(d.getDate() - dia);
+            const inicio = new Date(d);
+            inicio.setDate(d.getDate() - dia);
 
-    const fim = new Date(inicio);
-    fim.setDate(inicio.getDate() + 6);
+            const fim = new Date(inicio);
+            fim.setDate(inicio.getDate() + 6);
 
-    inicio.setHours(0,0,0,0);
-    fim.setHours(23,59,59,999);
+            inicio.setHours(0, 0, 0, 0);
+            fim.setHours(23, 59, 59, 999);
 
-    return {inicio, fim};
-}
+            return { inicio, fim };
+        }
 
         function atualizarTudo() {
             const { inicio, fim } = getIntervaloSemana(dataSelecionada);
@@ -1053,15 +1053,15 @@ function getIntervaloSemana(data) {
             // ==========================
             // 🟡 SEMANA SELECIONADA
             // ==========================
-const { inicio, fim } = getIntervaloSemana(dataSelecionada);
+            const { inicio, fim } = getIntervaloSemana(dataSelecionada);
 
-const totalSemana = baseDeDados
-   .filter(item => {
-      if (!item.dataObj) return false;
-      return item.dataObj >= inicio &&
-             item.dataObj <= fim;
-   })
-   .reduce((acc, curr) => acc + Number(curr.medida), 0);
+            const totalSemana = baseDeDados
+                .filter(item => {
+                    if (!item.dataObj) return false;
+                    return item.dataObj >= inicio &&
+                        item.dataObj <= fim;
+                })
+                .reduce((acc, curr) => acc + Number(curr.medida), 0);
 
             // ==========================
             // 🔵 PENDENTE (base total)
@@ -1224,6 +1224,15 @@ const totalSemana = baseDeDados
                     layout: {
                         padding: {
                             top: 30
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                autoSkip: false,
+                                maxRotation: 0,
+                                minRotation: 0
+                            }
                         }
                     },
                     onClick: function (evt, elements) {
@@ -1432,24 +1441,24 @@ const totalSemana = baseDeDados
                     fill: false
                 }
             );
-const labelsSemana = [];
+            const labelsSemana = [];
 
-for (let i = 0; i < 7; i++) {
+            for (let i = 0; i < 7; i++) {
 
-    const d = new Date(inicio);
-    d.setDate(inicio.getDate() + i);
+                const d = new Date(inicio);
+                d.setDate(inicio.getDate() + i);
 
-    const nomeDia = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'][i];
+                const nomeDia = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'][i];
 
-    const dataFormatada =
-        String(d.getDate()).padStart(2,'0') + '/' +
-        String(d.getMonth()+1).padStart(2,'0');
+                const dataFormatada =
+                    String(d.getDate()).padStart(2, '0') + '/' +
+                    String(d.getMonth() + 1).padStart(2, '0');
 
-    // duas linhas no eixo
-    labelsSemana.push([nomeDia, dataFormatada]);
-}
+                // duas linhas no eixo
+                labelsSemana.push([nomeDia, dataFormatada]);
+            }
 
-dailyChart.data.labels = labelsSemana;
+            dailyChart.data.labels = labelsSemana;
 
 
 
