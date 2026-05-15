@@ -250,8 +250,8 @@
                     </div>
                     <div>
                         <label class="text-xs font-semibold text-gray-500 block mb-1">Nº Pedido</label>
-                        <input type="text" id="formPedido" placeholder="Ex: 12345"
-                            class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-100">
+                        <input type="text" id="formPedido" inputmode="numeric" placeholder="Ex: 12345"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-100">
                     </div>
                     <div>
                         <label class="text-xs font-semibold text-gray-500 block mb-1">Cliente / Obra</label>
@@ -261,7 +261,7 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="text-xs font-semibold text-gray-500 block mb-1">Metros (m)</label>
-                            <input type="number" id="formMedida" placeholder="0"
+                            <input type="number" id="formMedida" placeholder="0" min="1"
                                 class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm outline-none font-bold focus:ring-2 focus:ring-blue-100">
                         </div>
                         <div>
@@ -563,6 +563,7 @@
         window.onload = async () => {
             document.getElementById('inputLimite').value = limiteDiario;
             document.getElementById('formDia').value = formatToISODate(dataSelecionada);
+            document.getElementById('formPedido').addEventListener('input', (e) => { e.target.value = e.target.value.replace(/[^0-9\/-]/g, '');});
             inicializarGraficos();
             inicializarCalendario();
             await carregarDados();
@@ -744,9 +745,9 @@
 
                 const dataFormatada = item.data ? formatarDataBusca(item.data) : 'sem data';
                 const matchesBusca =
-                    item.cliente.toLowerCase().includes(busca) ||
-                    item.produto.toLowerCase().includes(busca) ||
-                    (item.pedido && item.pedido.toLowerCase().includes(busca)) ||
+                    (item.cliente || '').toLowerCase().includes(busca)||
+                    (item.produto || '').toLowerCase().includes(busca) ||
+                    (item.pedido && (item.pedido || '').toLowerCase().includes(busca)) ||
                     dataFormatada.includes(busca);
                 const matchesStatus = statusFiltro === 'todos' || item.status === statusFiltro;
                 const filtroEntregue = mostrarEntregue || item.status !== 'entregue';
@@ -1141,7 +1142,7 @@
                         pedido: String(item.Pedido || ""),
                         cliente: item["Cliente/Obra"],
                         produto: item.Produto,
-                        medida: parseInt(item.Medida),
+                        medida: Number(item.Medida) || 0,
                         status: (item.Status || "").toLowerCase()
                     };
                 });
